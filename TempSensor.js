@@ -1,4 +1,11 @@
 
+/*
+* File: TempSensors.js
+* Author: Mike Fruge
+* Description: This File Implements the TempSensor object (class) and associated helper functions
+*				Used for generating data in EID Project 2
+*/
+
 
 // Declare Max and min target temps
  var minTarget = 35;
@@ -48,11 +55,32 @@ function genRandomFromRange(range, nominal, discrete) {
 
 }
 
+
+// function: getCurrentDateTime
+// returns date object expressing current date and time
+
 function getCurrentDateTime() {
 
-	return new Date().toLocaleString();
+	return new Date();
 
 }
+
+
+// function: parseDateTime
+// returns object with hours, munite, seconds field split up
+
+function parseDateTime(date) {
+	var parsed_date = {
+		'Hour' : date.getHours(),
+		'Minute' : date.getMinutes(),
+		'Seconds' : date.getSeconds()
+	}
+	return parsed_date
+}
+
+
+// class: Temp Sensor
+// Implements object used to generate temprature data based on Assignment description
 
 class TempSensor
 {
@@ -63,6 +91,7 @@ class TempSensor
 		this.alarmCnt = 0;
 		this.errorCnt = 0;
 		this.lastTemp = 0;
+		this.measureCnt = 0;
 		this.measureTemp();
 	}
 
@@ -100,6 +129,11 @@ class TempSensor
 
 
 		this.lastTemp = thisTemp;
+		this.measureCnt++;
+
+		// Compute this timestamp
+
+		this.timestamp = getCurrentDateTime();
 		
 		return thisTemp;
 	}
@@ -107,4 +141,4 @@ class TempSensor
 }
 
 // This allows us to initialize the sensor outside of the file
-module.exports = { TempSensor, genRandomFromRange}
+module.exports = { TempSensor, genRandomFromRange, parseDateTime }

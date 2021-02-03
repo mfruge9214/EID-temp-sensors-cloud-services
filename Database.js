@@ -1,6 +1,6 @@
 /*
 	File: Database.js
-	Author: Mike Fruge 
+	Author: Mike Fruge & Bryan Cisneros
 	Description: This file contains all resources needed to interface with a SQL database and conduct Truncate and Insert SQL transactions
 					Connection parameters must be changed to reflect desired DB connection parameters
 */
@@ -103,6 +103,8 @@ var createNewEntry = function (data) {
 
 }
 
+// function: clearTable
+// desc: this function is used to clear the database before the first temp measurment is inserted
 
 var clearTable = function(){
 

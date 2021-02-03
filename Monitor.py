@@ -1,4 +1,4 @@
-#########################
+ 	#########################
 # File: Monitor.py
 # Author: Mike Fruge & Bryan Cisneros
 # Description:
@@ -15,6 +15,10 @@ from datetime import datetime
 import pyodbc
 
 
+database = 'SensorData_1'
+table = 'Sensor_Data_Test'
+
+
 class Monitor:
 
 	def __init__(self):
@@ -22,7 +26,7 @@ class Monitor:
 		self.all_sensor_data = {}
 
 		self.server = 'localhost'
-		self.database = 'SensorData'
+		self.database = database
 		self.username = 'eid'
 		self.password = 'eid' # super secure
 		self.cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+self.server+';DATABASE='+self.database+';UID='+self.username+';PWD='+self.password)
@@ -43,7 +47,7 @@ class Monitor:
 		# clear the current stored data. We will re-read all of it to get a fresh copy
 		self.all_sensor_data.clear()
 
-		tsql = "SELECT * FROM Measurements;"
+		tsql = "SELECT * FROM " + table + ";"
 		with self.cursor.execute(tsql):
 			# help getting the data into a json object from:
 			# https://stackoverflow.com/questions/16519385/output-pyodbc-cursor-results-as-python-dictionary/16523148#16523148
@@ -132,7 +136,7 @@ class Monitor:
 			output += f'\tLow: {low_f} F ({low_c} C)\n'
 			high_f = calculations["high"]
 			high_c = self.fahrenheit_to_celsius(high_f)
-			output += f'\tLow: {high_f} F ({high_c} C)\n'
+			output += f'\tHigh: {high_f} F ({high_c} C)\n'
 			avg_f = calculations["avg_f"]
 			avg_c = self.fahrenheit_to_celsius(avg_f)
 			output += f'\tAvg: {avg_f} F ({avg_c} C)\n'

@@ -1,8 +1,9 @@
 /*
 * File: TempSensorApplication.js
-* Author: Mike Fruge
-* Description: This file is the master sensor process, which will spawn the child processes and run through each sensor routine
+* Author: Mike Fruge & Bryan Cisneros
+* Description: This file is the master sensor process, which will spawn the child processes and run through each sensor process
 */
+
 const { TempSensor, randomvalue } = require('./TempSensor.js');
 const { fork } = require('child_process');
 

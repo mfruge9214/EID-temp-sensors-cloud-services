@@ -18,8 +18,6 @@ sensor = new TempSensor(sensor_number + 1);
 console.log(' Created new sensor');
 console.log(' Sensor Number:', sensor.number);
 
-
-
 // Uses window.setInterval function will repetadly execute this function every 10 seconds
 
 var count = 0;
@@ -53,8 +51,8 @@ setInterval(function () {
 	createNewEntry(dataEntry);
 
 	// Exit condition
-	// Occurs at 30 executions of this periodic process
-	if(count === 30){			
+	// Occurs at 31 executions of this periodic process
+	if(count === 31){			
 		process.exit();
 	}
 

@@ -5,7 +5,7 @@ Mike Fruge &amp; Bryan Cisneros, Emb. Interface Design Spring 21, Assignment 2
 
 This application is plit into 2 main programs, a python application that monitors sensor progress, and a nodejs application that lauches a desired number of sensor processes to create data.
 The data is then stored into a locally hosted (for this implementation) Microsoft SQL database. Data is created and the database updated every 10 seconds, for a 5 minute period. Every 30 seconds, the python monitor reads the database and writes sata to the console and text file. 
-At the end of the program execution, the Monitor will generate a plot of each sensor's collected data.
+Graph.py can be run at any point to display a graph of current temperature readings from each sensor on a single plot, regardless of whether the run has finished or not.
 
 ## Execution Instructions
 

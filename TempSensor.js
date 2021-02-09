@@ -1,7 +1,7 @@
 
 /*
 * File: TempSensors.js
-* Author: Mike Fruge
+* Author: Mike Fruge & Bryan Cisneros
 * Description: This File Implements the TempSensor object (class) and associated helper functions
 *				Used for generating data in EID Project 2
 */
@@ -86,17 +86,24 @@ class TempSensor
 {
 	constructor(number){
 		this.number = number;
-		this.target = genRandomFromRange(5, 40, true);
+		this.targetT = genRandomFromRange(5, 40, true);
+		this.targetH = genRandomFromRange(5, 40, true);
 		this.timestamp = getCurrentDateTime();
 		this.alarmCnt = 0;
 		this.errorCnt = 0;
-		this.lastTemp = 0;
+		this.lastMeasurement =  {   'Temp': 0,
+									'Humidity': 0
+								};
 		this.measureCnt = 0;
-		this.measureTemp();
+		this.measureEnvironment();
+		console.log(this.lastMeasurement);
 	}
 
 
-	measureTemp() {
+	measureEnvironment() {
+		////////////////////////////////////////
+		// Temp calculations
+		////////////////////////////////////////
 
 		// Normal sensor variation around target
 		var normalVariation = genRandomFromRange(2, 0, false);
@@ -110,32 +117,57 @@ class TempSensor
 			spike = genRandomFromRange(4.5, 3.5, false)
 
 		}
-		var thisTemp = this.target + normalVariation + spike;
+		var thisTemp = this.targetT + normalVariation + spike;
 
-		// Random range for error
+		////////////////////////////////////////////////
+		// Humidity calculations
+		////////////////////////////////////////////////
+		normalVariation = genRandomFromRange(2, 0, false);
+
+		// Check random range of numbers for spike
+		spikeChance = Math.random();
+		spike = 0;
+		if(spikeChance >.1 && spikeChance < .2){
+			// Generate spike
+			spike = genRandomFromRange(10, 0, false)
+
+		}
+
+		var thisH = this.targetH + normalVariation + spike;
+
+		////////////////////////////////////////////
+		// Sensor availability and error calculation
+		////////////////////////////////////////////
 		var errorChance = Math.random();
+
 		if(errorChance > .4 && errorChance < .5){
 			thisTemp = 999;
+			thisH = 999;
 			this.errorCnt++;
 		}
 
+		////////////////////////////////////////////
+		// Alarm incrementing check
+		////////////////////////////////////////////
 
-		// Increment alarm counter if there is valid temp and outside range
-		if(thisTemp > this.target + 5 || thisTemp < this.target - 5){
-			if(thisTemp != 999){
+		var h_threshold = 5;
+		var t_threshold = 5;
+
+		if((thisH > this.targetH + h_threshold) || (thisTemp > this.targetT + t_threshold)){
+
+			// Check either value to ensure valid reading
+			if(thisH != 999){
 				this.alarmCnt++;
 			}
 		}
 
-
-		this.lastTemp = thisTemp;
 		this.measureCnt++;
 
 		// Compute this timestamp
-
 		this.timestamp = getCurrentDateTime();
 		
-		return thisTemp;
+		this.lastMeasurement['Temp'] = thisTemp;
+		this.lastMeasurement['Humidity'] = thisH;
 	}
 
 }

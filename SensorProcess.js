@@ -27,8 +27,8 @@ setInterval(function () {
 	// This code is executed in intervals set by the second argument in ms
 	count++;
 
-	sensor.measureTemp();
-	console.log(sensor.number, ' taking temp ');
+	sensor.measureEnvironment();
+	console.log(sensor.number, ' taking measurment');
 
 	var parsedDate = parseDateTime(sensor.timestamp);
 
@@ -39,13 +39,14 @@ setInterval(function () {
 	// Create structure for sending data to DB
 	// Keys must match with database columns
 	var dataEntry = {
-		'SensorNumber' : sensor.number,
-		'CurrentTemp'	: sensor.lastTemp,
-		'Hour'			: parsedDate['Hour'],
-		'Minute'		: parsedDate['Minute'],
-		'Second'		: parsedDate['Seconds'],
-		'AlarmCount'	: sensor.alarmCnt,
-		'ErrorCount'	: sensor.errorCnt,
+		'SensorNumber' 		: sensor.number,
+		'CurrentTemp'		: sensor.lastMeasurement['Temp'],
+		'CurrentHumidity'	: sensor.lastMeasurement['Humidity'],
+		'Hour'				: parsedDate['Hour'],
+		'Minute'			: parsedDate['Minute'],
+		'Second'			: parsedDate['Seconds'],
+		'AlarmCount'		: sensor.alarmCnt,
+		'ErrorCount'		: sensor.errorCnt,
 	}
 
 	createNewEntry(dataEntry);

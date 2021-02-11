@@ -1,7 +1,9 @@
 import sys
 
-from PyQt5.QtWidgets import QMainWindow, QApplication 
+from PyQt5.QtWidgets import QMainWindow, QApplication
 from Simple_UI import Ui_MainWindow
+from PyQt5.QtCore import QTimer
+from Monitor import Monitor
 
 
 # cmd to convert from .ui file to .py file
@@ -19,8 +21,16 @@ class AppWindow(QMainWindow):
 		self.ui.setupUi(self)
 		self.sensorAppInit() 
 		self.show()
+		self.timer=QTimer()
+		self.timer.timeout.connect(self.getData)
+		self.timer.start(1000)
+		self.monitor = Monitor()
+		self.count = 0
 
-
+	def getData(self):
+		#self.monitor.generate_report()
+		self.count += 1
+		self.ui.screen_output.setText(str(self.count))
 
 	def sensorAppInit(self):
 
@@ -42,7 +52,7 @@ class AppWindow(QMainWindow):
 									5: self.ui.led_h_alarm
 		}
 
-		self.functionNumber = 1;
+		self.functionNumber = 1
 
 		# Initialize the state of the UI
 		self.ui.screen_output.setText(str(self.currentSensor))

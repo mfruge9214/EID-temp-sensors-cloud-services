@@ -1,8 +1,9 @@
 import sys
 
 from PyQt5.QtWidgets import QMainWindow, QApplication 
+from PyQt5.QtCore import QTimer
 from Simple_UI import Ui_MainWindow
-
+from Monitor import Monitor
 
 # cmd to convert from .ui file to .py file
 # python -m PyQt5.uic.pyuic -x Simple_UI.ui -o Simple_UI.py
@@ -26,13 +27,15 @@ class AppWindow(QMainWindow):
 
 		# Initialize variables we need
 		self.currentSensor = 1
+
 		self.functions  = {
-							1: 'Sensor',
-							2: 'Temperature',
-							3: 'Humidity',
-							4: 'Temp Alarm',
-							5: 'Hum Alarm'
+					1: 'SensorNumber',
+					2: 'CurrentTemp',
+					3: 'CurrentHumidity',
+					4: 'TempAlarmCount',
+					5: 'HumAlarmCount'
 		}
+
 
 		self.function_indicator = {
 									1: self.ui.led_sensor,
@@ -44,19 +47,32 @@ class AppWindow(QMainWindow):
 
 		self.functionNumber = 1;
 
+		self.displayCelcius = False
+
 		# Initialize the state of the UI
-		self.ui.screen_output.setText(str(self.currentSensor))
+		self.ui.screen_output.setText(str("0000000"))
+
+		# Initialize UI timer for updates
+		self.timer = QTimer()
+
+		# Create instance of monitor class
+		self.monitor = Monitor()
+
 
 		# Register functions to corresponding event
 		self.ui.pb_select.released.connect(self.select_button)
 		self.ui.pb_up.released.connect(self.up_button)
 		self.ui.pb_down.released.connect(self.down_button)
+		self.ui.pb_convertTemp.released.connect(self.convertTemp_button)
+		self.timer.timeout.connect(self.read_data)
+		self.timer.start(1000)
 
 
 	def select_button(self):
 
 		# Uncheck current button
-		self.function_indicator[self.functionNumber].setChecked(False)
+		for num in range(1, 6):
+			self.function_indicator[self.functionNumber].setChecked(False)
 
 		# Wrap around or not
 		if(self.functionNumber < 5):
@@ -67,6 +83,8 @@ class AppWindow(QMainWindow):
 		# Check next box
 		self.function_indicator[self.functionNumber].setChecked(True)
 
+		self.updateOutput()
+
 		
 		
 	# Up button released event
@@ -74,14 +92,33 @@ class AppWindow(QMainWindow):
 		if self.currentSensor < NUM_SENSORS:
 			self.currentSensor += 1
 
-		self.ui.screen_output.setText(str(self.currentSensor))
+		self.updateOutput()
 
 	# Down Button released event
 	def down_button(self):
 		if self.currentSensor > 1:
 			self.currentSensor -= 1
 
-		self.ui.screen_output.setText(str(self.currentSensor))
+		self.updateOutput()
+
+
+	def convertTemp_button(self):
+		self.displayCelcius = ~(self.displayCelcius)
+		self.updateOutput()
+
+
+	def read_data(self):
+		self.monitor.read_sensor_data()
+		self.updateOutput()
+
+	def updateOutput(self):
+		lastMeasurement = self.monitor.get_last_sensor_data(self.currentSensor)
+
+		neededData = lastMeasurement[self.functions[self.functionNumber]]
+
+		displayString = "S0" + str(self.currentSensor) + "  " + str(neededData)
+
+		self.ui.screen_output.setText(displayString)
 
 app = QApplication(sys.argv)
 w = AppWindow()

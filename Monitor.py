@@ -117,6 +117,11 @@ class Monitor:
 			pass
 		return deg_c
 
+	def get_last_sensor_data(self, sensor_number):
+
+		return self.all_sensor_data[sensor_number][-1]
+
+
 
 	def print_report(self):
 		# generate a report, consisting of a timestamp, then the low, high, average,

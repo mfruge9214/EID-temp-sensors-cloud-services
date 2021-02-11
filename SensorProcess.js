@@ -45,7 +45,8 @@ setInterval(function () {
 		'Hour'				: parsedDate['Hour'],
 		'Minute'			: parsedDate['Minute'],
 		'Second'			: parsedDate['Seconds'],
-		'AlarmCount'		: sensor.alarmCnt,
+		'TempAlarmCount'	: sensor.TalarmCnt,
+		'HumAlarmCount'		: sensor.HalarmCnt,
 		'ErrorCount'		: sensor.errorCnt,
 	}
 

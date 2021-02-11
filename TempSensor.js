@@ -89,7 +89,8 @@ class TempSensor
 		this.targetT = genRandomFromRange(5, 40, true);
 		this.targetH = genRandomFromRange(5, 40, true);
 		this.timestamp = getCurrentDateTime();
-		this.alarmCnt = 0;
+		this.TalarmCnt = 0;
+		this.HalarmCnt = 0;
 		this.errorCnt = 0;
 		this.lastMeasurement =  {   'Temp': 0,
 									'Humidity': 0
@@ -153,11 +154,19 @@ class TempSensor
 		var h_threshold = 5;
 		var t_threshold = 5;
 
-		if((thisH > this.targetH + h_threshold) || (thisTemp > this.targetT + t_threshold)){
+		if((thisH > this.targetH + h_threshold)){
 
 			// Check either value to ensure valid reading
 			if(thisH != 999){
-				this.alarmCnt++;
+				this.HalarmCnt++;
+			}
+		}
+
+		if((thisTemp > this.targetT + t_threshold)){
+
+			// Check either value to ensure valid reading
+			if(thisTemp != 999){
+				this.TalarmCnt++;
 			}
 		}
 

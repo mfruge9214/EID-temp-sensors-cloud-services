@@ -18,7 +18,7 @@ sensor = new TempSensor(sensor_number + 1);
 console.log(' Created new sensor');
 console.log(' Sensor Number:', sensor.number);
 
-// Uses window.setInterval function will repetadly execute this function every 10 seconds
+// Uses window.setInterval function, will repetadly execute this function every 10 seconds
 
 var count = 0;
 
@@ -45,8 +45,6 @@ setInterval(function () {
 		'Hour'				: parsedDate['Hour'],
 		'Minute'			: parsedDate['Minute'],
 		'Second'			: parsedDate['Seconds'],
-		'TempAlarmCount'	: sensor.TalarmCnt,
-		'HumAlarmCount'		: sensor.HalarmCnt,
 		'ErrorCount'		: sensor.errorCnt,
 	}
 

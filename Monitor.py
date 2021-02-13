@@ -119,7 +119,10 @@ class Monitor:
 
 	def get_last_sensor_data(self, sensor_number):
 
-		return self.all_sensor_data[sensor_number][-1]
+		if(self.all_sensor_data): return self.all_sensor_data[sensor_number][-1]
+
+		else: return None
+		
 
 
 

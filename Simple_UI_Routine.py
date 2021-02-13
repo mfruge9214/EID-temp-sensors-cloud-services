@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import QTimer
 from Simple_UI import Ui_MainWindow
 from Monitor import Monitor
+import UI_Event_Handling as UI_Helper
 
 
 # cmd to convert from .ui file to .py file
@@ -22,29 +23,13 @@ class AppWindow(QMainWindow):
 		self.ui.setupUi(self)
 		self.sensorAppInit() 
 		self.show()
-		self.timer=QTimer()
-		self.timer.timeout.connect(self.getData)
-		self.timer.start(1000)
-		self.monitor = Monitor()
-		self.count = 0
-
-	def getData(self):
-		#self.monitor.generate_report()
-		self.count += 1
-		self.ui.screen_output.setText(str(self.count))
+		self.read_data()
 
 	def sensorAppInit(self):
 
 		# Initialize variables we need
 		self.currentSensor = 1
 
-		self.functions  = {
-					1: 'SensorNumber',
-					2: 'CurrentTemp',
-					3: 'CurrentHumidity',
-					4: 'TempAlarmCount',
-					5: 'HumAlarmCount'
-		}
 
 
 		self.function_indicator = {
@@ -67,7 +52,6 @@ class AppWindow(QMainWindow):
 
 		# Create instance of monitor class
 		self.monitor = Monitor()
-
 
 		# Register functions to corresponding event
 		self.ui.pb_select.released.connect(self.select_button)
@@ -99,15 +83,35 @@ class AppWindow(QMainWindow):
 		
 	# Up button released event
 	def up_button(self):
-		if self.currentSensor < NUM_SENSORS:
-			self.currentSensor += 1
+
+		function = UI_Helper.UI_FUNCTIONS[self.functionNumber]
+
+		if(function == 'SensorNumber'):
+			if self.currentSensor < NUM_SENSORS:
+				self.currentSensor += 1
+
+		elif(function == 'TempAlarmCount' or function == 'HumAlarmCount'):
+
+			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)['val']
+			alarm += 1;
+			UI_Helper.setSensorAlarmVal(alarm, self.currentSensor, self.functionNumber)
 
 		self.updateOutput()
 
 	# Down Button released event
 	def down_button(self):
-		if self.currentSensor > 1:
-			self.currentSensor -= 1
+
+		function = UI_Helper.UI_FUNCTIONS[self.functionNumber]
+
+		if(function == 'SensorNumber'):
+			if self.currentSensor > 1:
+				self.currentSensor -= 1
+
+		elif(function == 'TempAlarmCount' or function == 'HumAlarmCount'):
+
+			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)['val']
+			alarm -= 1;
+			UI_Helper.setSensorAlarmVal(alarm, self.currentSensor, self.functionNumber)
 
 		self.updateOutput()
 
@@ -119,16 +123,68 @@ class AppWindow(QMainWindow):
 
 	def read_data(self):
 		self.monitor.read_sensor_data()
+
+		for sensor in range(1, 6):
+			lastMeasurement = self.monitor.get_last_sensor_data(sensor)
+			TAlarm = UI_Helper.getSensorAlarm(sensor, 4)['val']
+			HAlarm = UI_Helper.getSensorAlarm(sensor, 5)['val']
+
+			if(lastMeasurement[UI_Helper.UI_FUNCTIONS[4]] > TAlarm):
+				UI_Helper.incSensorAlarmCount(sensor, 4)
+
+			if(lastMeasurement[UI_Helper.UI_FUNCTIONS[5]] > HAlarm):
+				UI_Helper.incSensorAlarmCount(sensor, 5)
+
 		self.updateOutput()
 
 	def updateOutput(self):
 		lastMeasurement = self.monitor.get_last_sensor_data(self.currentSensor)
 
-		neededData = lastMeasurement[self.functions[self.functionNumber]]
+		neededData = lastMeasurement[UI_Helper.UI_FUNCTIONS[self.functionNumber]]
 
-		displayString = "S0" + str(self.currentSensor) + "  " + str(neededData)
+		errorCount = lastMeasurement['ErrorCount']
+
+		# Construct standard part of display
+		displayString = "S0" + str(self.currentSensor) + ":"
+
+		# Format the data correctly
+		dataString = " "
+
+		function = UI_Helper.UI_FUNCTIONS[self.functionNumber]
+		## Display Temperature
+		if(function == 'CurrentTemp'):
+
+			if(self.displayCelcius):
+				dataString = str(self.monitor.fahrenheit_to_celsius(neededData)) + " Deg C "
+			else:
+				dataString = str(neededData) + " Deg F "
+
+		elif(function == 'CurrentHumidity'):
+
+			dataString = str(neededData) + " % RH  "
+
+		elif(function == 'TempAlarmCount'):
+
+			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)
+
+			if(self.displayCelcius):
+				dataString = "Thresh:" + str(self.monitor.fahrenheit_to_celsius(alarm['val'])) + " Deg C, Count:" + str(alarm['count'])
+			else:
+				dataString = "Thresh:" + str(alarm['val']) + " Deg F, Count:" + str(alarm['count'])
+
+		elif(function == 'HumAlarmCount'):
+
+			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)
+
+			dataString = "Thresh:" + str(alarm['val']) + "% RH, Count:" + str(alarm['count'])
+
+
+		displayString += dataString
+
+		displayString += " Errors: " + str(errorCount)
 
 		self.ui.screen_output.setText(displayString)
+
 
 app = QApplication(sys.argv)
 w = AppWindow()

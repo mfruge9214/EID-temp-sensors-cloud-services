@@ -22,8 +22,8 @@ class AppWindow(QMainWindow):
 		self.ui=  Ui_MainWindow()
 		self.ui.setupUi(self)
 		self.sensorAppInit() 
-		self.show()
 		self.read_data()
+		self.show()
 
 	def sensorAppInit(self):
 
@@ -45,7 +45,7 @@ class AppWindow(QMainWindow):
 		self.displayCelcius = False
 
 		# Initialize the state of the UI
-		self.ui.screen_output.setText(str("0000000"))
+		self.ui.screen_output.setText("INITIALIZING")
 
 		# Initialize UI timer for updates
 		self.timer = QTimer()
@@ -59,7 +59,7 @@ class AppWindow(QMainWindow):
 		self.ui.pb_down.released.connect(self.down_button)
 		self.ui.pb_convertTemp.released.connect(self.convertTemp_button)
 		self.timer.timeout.connect(self.read_data)
-		self.timer.start(1000)
+		self.timer.start(10000)
 
 
 	def select_button(self):
@@ -124,21 +124,29 @@ class AppWindow(QMainWindow):
 	def read_data(self):
 		self.monitor.read_sensor_data()
 
-		for sensor in range(1, 6):
+		for sensor in range(1, NUM_SENSORS+1):
 			lastMeasurement = self.monitor.get_last_sensor_data(sensor)
+			if(lastMeasurement == None):
+				return
+
 			TAlarm = UI_Helper.getSensorAlarm(sensor, 4)['val']
 			HAlarm = UI_Helper.getSensorAlarm(sensor, 5)['val']
 
-			if(lastMeasurement[UI_Helper.UI_FUNCTIONS[4]] > TAlarm):
+			if(lastMeasurement['CurrentTemp'] > TAlarm and lastMeasurement['CurrentTemp'] != 999):
 				UI_Helper.incSensorAlarmCount(sensor, 4)
 
-			if(lastMeasurement[UI_Helper.UI_FUNCTIONS[5]] > HAlarm):
+			if(lastMeasurement['CurrentHumidity'] > HAlarm and lastMeasurement['CurrentHumidity'] != 999):
 				UI_Helper.incSensorAlarmCount(sensor, 5)
 
 		self.updateOutput()
 
 	def updateOutput(self):
 		lastMeasurement = self.monitor.get_last_sensor_data(self.currentSensor)
+
+		## Ensure there is valid data to display
+		if(lastMeasurement == None):
+			self.ui.screen_output.setText(" INITIALIZING ")
+			return
 
 		neededData = lastMeasurement[UI_Helper.UI_FUNCTIONS[self.functionNumber]]
 

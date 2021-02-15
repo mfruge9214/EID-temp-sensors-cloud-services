@@ -9,7 +9,7 @@ import UI_Event_Handling as UI_Helper
 
 
 # cmd to convert from .ui file to .py file
-# python -m PyQt5.uic.pyuic -x Simple_UI.ui -o Simple_UI.py
+# python -m PyQt5.uic.pyuic -x Complex_UI.ui -o Complex_UI.py
 
 
 # For now, just putting these defines here
@@ -22,7 +22,7 @@ class AppWindow(QMainWindow):
 		self.ui=  Ui_MainWindow()
 		self.ui.setupUi(self)
 		self.sensorAppInit() 
-		self.read_data()
+		self.periodic_update()
 		self.show()
 
 	def sensorAppInit(self):
@@ -30,6 +30,93 @@ class AppWindow(QMainWindow):
 		# Initialize variables we need
 		self.currentSensor = 1
 
+
+		self.measurement_output_displays = {
+												1: self.ui.s1_measurement_output,
+												2: self.ui.s2_measurement_output,
+												3: self.ui.s3_measurement_output,
+												4: self.ui.s4_measurement_output,
+												5: self.ui.s5_measurement_output,
+												6: self.ui.s6_measurement_output
+										}
+
+
+		self.alarm_inputs = {
+								1: {
+									'Temp': self.ui.s1_T_alarm,
+									'Hum' : self.ui.s1_H_alarm
+								},
+								2: {
+									'Temp': self.ui.s2_T_alarm,
+									'Hum' : self.ui.s2_H_alarm
+								},
+								3: {
+									'Temp': self.ui.s3_T_alarm,
+									'Hum' : self.ui.s3_H_alarm
+								},
+								4: {
+									'Temp': self.ui.s4_T_alarm,
+									'Hum' : self.ui.s4_H_alarm
+								},
+								5: {
+									'Temp': self.ui.s5_T_alarm,
+									'Hum' : self.ui.s5_H_alarm
+								},
+								6: {
+									'Temp': self.ui.s6_T_alarm,
+									'Hum' : self.ui.s6_H_alarm
+								}
+						}
+
+		self.error_outputs = {
+
+								1: self.ui.s1_error_output,
+								2: self.ui.s2_error_output,
+								3: self.ui.s3_error_output,
+								4: self.ui.s4_error_output,
+								5: self.ui.s5_error_output,
+								6: self.ui.s6_error_output
+
+		}
+
+
+		# Test groupbox clickability
+
+		self.ui.groupBox_13.clicked.connect(self.groupbox_click)
+		## Connect the alarm inputs to their respective functions
+		# for sensor_num, input_box in self.alarm_inputs.items():
+		# 	input_box.valueChanged.connect()
+
+		## First screen output boxes
+		# self.ui.s1_measurement_output
+		# self.ui.s2_measurement_output
+		# self.ui.s3_measurement_output
+		# self.ui.s4_measurement_output
+		# self.ui.s5_measurement_output
+		# self.ui.s6_measurement_output
+
+		## Alarm settings
+		# self.ui.s1_T_alarm.valueChanged.connect()
+		# self.ui.s1_H_alarm.valueChanged.connect()
+		
+		# self.ui.s2_T_alarm.valueChanged.connect()
+		# self.ui.s2_H_alarm.valueChanged.connect()
+		
+		# self.ui.s3_T_alarm.valueChanged.connect()
+		# self.ui.s3_H_alarm.valueChanged.connect()
+		
+		# self.ui.s4_T_alarm.valueChanged.connect()
+		# self.ui.s4_H_alarm.valueChanged.connect()
+		
+		# self.ui.s5_T_alarm.valueChanged.connect()
+		# self.ui.s5_H_alarm.valueChanged.connect()
+		
+		# self.ui.s6_T_alarm.valueChanged.connect()
+		# self.ui.s6_H_alarm.valueChanged.connect()
+
+
+		## Error displays
+		# s5_error_output
 
 
 		# self.function_indicator = {
@@ -58,8 +145,8 @@ class AppWindow(QMainWindow):
 		# self.ui.pb_up.released.connect(self.up_button)
 		# self.ui.pb_down.released.connect(self.down_button)
 		# self.ui.pb_convertTemp.released.connect(self.convertTemp_button)
-		# self.timer.timeout.connect(self.read_data)
-		# self.timer.start(10000)
+		self.timer.timeout.connect(self.periodic_update)
+		self.timer.start(10000)
 		x=range(0, 10)
 		y=range(0, 20, 2)
 		#self.ui.plotWidget.canvas.subplot(232)
@@ -73,6 +160,10 @@ class AppWindow(QMainWindow):
 		self.ui.plotWidget.canvas.ax[2][1].set_title('Sensor 6')
 		self.ui.plotWidget.canvas.draw()
 
+
+	def groupbox_click():
+
+		print("Groupbox clicked")
 
 	def select_button(self):
 
@@ -133,7 +224,7 @@ class AppWindow(QMainWindow):
 		self.updateOutput()
 
 
-	def read_data(self):
+	def periodic_update(self):
 		self.monitor.read_sensor_data()
 
 		for sensor in range(1, NUM_SENSORS+1):
@@ -153,57 +244,28 @@ class AppWindow(QMainWindow):
 		self.updateOutput()
 
 	def updateOutput(self):
-		lastMeasurement = self.monitor.get_last_sensor_data(self.currentSensor)
 
-		## Ensure there is valid data to display
-		if(lastMeasurement == None):
-			#self.ui.screen_output.setText(" INITIALIZING ")
-			return
-
-		neededData = lastMeasurement[UI_Helper.UI_FUNCTIONS[self.functionNumber]]
-
-		errorCount = lastMeasurement['ErrorCount']
-
-		# Construct standard part of display
-		displayString = "S0" + str(self.currentSensor) + ":"
-
-		# Format the data correctly
-		dataString = " "
-
-		function = UI_Helper.UI_FUNCTIONS[self.functionNumber]
-		## Display Temperature
-		if(function == 'CurrentTemp'):
-
-			if(self.displayCelcius):
-				dataString = str(self.monitor.fahrenheit_to_celsius(neededData)) + " Deg C "
-			else:
-				dataString = str(neededData) + " Deg F "
-
-		elif(function == 'CurrentHumidity'):
-
-			dataString = str(neededData) + " % RH  "
-
-		elif(function == 'TempAlarmCount'):
-
-			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)
-
-			if(self.displayCelcius):
-				dataString = "Thresh:" + str(self.monitor.fahrenheit_to_celsius(alarm['val'])) + " Deg C, Count:" + str(alarm['count'])
-			else:
-				dataString = "Thresh:" + str(alarm['val']) + " Deg F, Count:" + str(alarm['count'])
-
-		elif(function == 'HumAlarmCount'):
-
-			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)
-
-			dataString = "Thresh:" + str(alarm['val']) + "% RH, Count:" + str(alarm['count'])
+		self.update_measurements()
+		#self.update_errors()
 
 
-		displayString += dataString
+	def update_measurements(self):
 
-		displayString += " Errors: " + str(errorCount)
+		## Construct string
 
-		#self.ui.screen_output.setText(displayString)
+		for sensor_num, display in self.measurement_output_displays.items():
+			lastMeasurement = self.monitor.get_last_sensor_data(sensor_num)
+
+			if(lastMeasurement == None):
+				display.setText(" 888 ")
+				break
+
+			temp = lastMeasurement['CurrentTemp']
+			hum = lastMeasurement['CurrentHumidity']
+			# Add T and H alarms in here too?
+			display_string = str(temp) + " deg F\n" + str(hum) + " % RH" 
+			display.setText(display_string)
+
 
 
 app = QApplication(sys.argv)

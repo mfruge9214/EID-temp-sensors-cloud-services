@@ -23,64 +23,70 @@ class Ui_MainWindow(object):
         self.currentMeasurements = QtWidgets.QWidget()
         self.currentMeasurements.setObjectName("currentMeasurements")
         self.groupBox_25 = QtWidgets.QGroupBox(self.currentMeasurements)
-        self.groupBox_25.setGeometry(QtCore.QRect(290, 20, 191, 181))
+        self.groupBox_25.setGeometry(QtCore.QRect(270, 20, 211, 201))
         self.groupBox_25.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_25.setObjectName("groupBox_25")
         self.s2_measurement_output = QtWidgets.QTextEdit(self.groupBox_25)
-        self.s2_measurement_output.setGeometry(QtCore.QRect(0, 30, 191, 151))
+        self.s2_measurement_output.setGeometry(QtCore.QRect(0, 30, 211, 171))
         font = QtGui.QFont()
-        font.setPointSize(32)
+        font.setPointSize(20)
         self.s2_measurement_output.setFont(font)
+        self.s2_measurement_output.setReadOnly(True)
         self.s2_measurement_output.setObjectName("s2_measurement_output")
         self.groupBox_26 = QtWidgets.QGroupBox(self.currentMeasurements)
-        self.groupBox_26.setGeometry(QtCore.QRect(290, 230, 191, 181))
+        self.groupBox_26.setGeometry(QtCore.QRect(270, 230, 211, 201))
         self.groupBox_26.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_26.setObjectName("groupBox_26")
         self.s4_measurement_output = QtWidgets.QTextEdit(self.groupBox_26)
-        self.s4_measurement_output.setGeometry(QtCore.QRect(0, 30, 191, 151))
+        self.s4_measurement_output.setGeometry(QtCore.QRect(0, 30, 211, 171))
         font = QtGui.QFont()
-        font.setPointSize(32)
+        font.setPointSize(20)
         self.s4_measurement_output.setFont(font)
+        self.s4_measurement_output.setReadOnly(True)
         self.s4_measurement_output.setObjectName("s4_measurement_output")
         self.groupBox_27 = QtWidgets.QGroupBox(self.currentMeasurements)
-        self.groupBox_27.setGeometry(QtCore.QRect(290, 440, 191, 181))
+        self.groupBox_27.setGeometry(QtCore.QRect(270, 440, 211, 201))
         self.groupBox_27.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_27.setObjectName("groupBox_27")
         self.s6_measurement_output = QtWidgets.QTextEdit(self.groupBox_27)
-        self.s6_measurement_output.setGeometry(QtCore.QRect(0, 30, 191, 151))
+        self.s6_measurement_output.setGeometry(QtCore.QRect(0, 30, 211, 171))
         font = QtGui.QFont()
-        font.setPointSize(32)
+        font.setPointSize(20)
         self.s6_measurement_output.setFont(font)
+        self.s6_measurement_output.setReadOnly(True)
         self.s6_measurement_output.setObjectName("s6_measurement_output")
         self.groupBox_28 = QtWidgets.QGroupBox(self.currentMeasurements)
-        self.groupBox_28.setGeometry(QtCore.QRect(50, 20, 191, 181))
+        self.groupBox_28.setGeometry(QtCore.QRect(30, 20, 211, 201))
         self.groupBox_28.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_28.setObjectName("groupBox_28")
         self.s1_measurement_output = QtWidgets.QTextEdit(self.groupBox_28)
-        self.s1_measurement_output.setGeometry(QtCore.QRect(0, 30, 191, 151))
+        self.s1_measurement_output.setGeometry(QtCore.QRect(0, 30, 211, 171))
         font = QtGui.QFont()
-        font.setPointSize(32)
+        font.setPointSize(20)
         self.s1_measurement_output.setFont(font)
+        self.s1_measurement_output.setReadOnly(True)
         self.s1_measurement_output.setObjectName("s1_measurement_output")
         self.groupBox_29 = QtWidgets.QGroupBox(self.currentMeasurements)
-        self.groupBox_29.setGeometry(QtCore.QRect(50, 230, 191, 181))
+        self.groupBox_29.setGeometry(QtCore.QRect(30, 230, 211, 201))
         self.groupBox_29.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_29.setObjectName("groupBox_29")
         self.s3_measurement_output = QtWidgets.QTextEdit(self.groupBox_29)
-        self.s3_measurement_output.setGeometry(QtCore.QRect(0, 30, 191, 151))
+        self.s3_measurement_output.setGeometry(QtCore.QRect(0, 30, 211, 171))
         font = QtGui.QFont()
-        font.setPointSize(32)
+        font.setPointSize(20)
         self.s3_measurement_output.setFont(font)
+        self.s3_measurement_output.setReadOnly(True)
         self.s3_measurement_output.setObjectName("s3_measurement_output")
         self.groupBox_30 = QtWidgets.QGroupBox(self.currentMeasurements)
-        self.groupBox_30.setGeometry(QtCore.QRect(50, 440, 191, 181))
+        self.groupBox_30.setGeometry(QtCore.QRect(30, 440, 211, 201))
         self.groupBox_30.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_30.setObjectName("groupBox_30")
         self.s5_measurement_output = QtWidgets.QTextEdit(self.groupBox_30)
-        self.s5_measurement_output.setGeometry(QtCore.QRect(0, 30, 191, 151))
+        self.s5_measurement_output.setGeometry(QtCore.QRect(0, 30, 211, 171))
         font = QtGui.QFont()
-        font.setPointSize(32)
+        font.setPointSize(20)
         self.s5_measurement_output.setFont(font)
+        self.s5_measurement_output.setReadOnly(True)
         self.s5_measurement_output.setObjectName("s5_measurement_output")
         self.tabWidget.addTab(self.currentMeasurements, "")
         self.Alarms = QtWidgets.QWidget()
@@ -212,6 +218,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(32)
         self.s1_error_output.setFont(font)
+        self.s1_error_output.setReadOnly(True)
         self.s1_error_output.setObjectName("s1_error_output")
         self.groupBox_2 = QtWidgets.QGroupBox(self.Errors)
         self.groupBox_2.setGeometry(QtCore.QRect(290, 20, 191, 181))
@@ -222,6 +229,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(32)
         self.s2_error_output.setFont(font)
+        self.s2_error_output.setReadOnly(True)
         self.s2_error_output.setObjectName("s2_error_output")
         self.groupBox_3 = QtWidgets.QGroupBox(self.Errors)
         self.groupBox_3.setGeometry(QtCore.QRect(50, 230, 191, 181))
@@ -232,6 +240,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(32)
         self.s3_error_output.setFont(font)
+        self.s3_error_output.setReadOnly(True)
         self.s3_error_output.setObjectName("s3_error_output")
         self.groupBox_4 = QtWidgets.QGroupBox(self.Errors)
         self.groupBox_4.setGeometry(QtCore.QRect(290, 230, 191, 181))
@@ -242,6 +251,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(32)
         self.s4_error_output.setFont(font)
+        self.s4_error_output.setReadOnly(True)
         self.s4_error_output.setObjectName("s4_error_output")
         self.groupBox_5 = QtWidgets.QGroupBox(self.Errors)
         self.groupBox_5.setGeometry(QtCore.QRect(50, 440, 191, 181))
@@ -252,6 +262,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(32)
         self.s5_error_output.setFont(font)
+        self.s5_error_output.setReadOnly(True)
         self.s5_error_output.setObjectName("s5_error_output")
         self.groupBox_6 = QtWidgets.QGroupBox(self.Errors)
         self.groupBox_6.setGeometry(QtCore.QRect(290, 440, 191, 181))
@@ -262,6 +273,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(32)
         self.s6_error_output.setFont(font)
+        self.s6_error_output.setReadOnly(True)
         self.s6_error_output.setObjectName("s6_error_output")
         self.tabWidget.addTab(self.Errors, "")
         self.Graphs = QtWidgets.QWidget()
@@ -280,7 +292,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -290,42 +302,42 @@ class Ui_MainWindow(object):
         self.s2_measurement_output.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:32pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:20pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">72</span><span style=\" font-size:24pt; vertical-align:super;\">o</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">62% RH</span></p></body></html>"))
         self.groupBox_26.setTitle(_translate("MainWindow", "Sensor 4"))
         self.s4_measurement_output.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:32pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:20pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">74</span><span style=\" font-size:24pt; vertical-align:super;\">o</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">64% RH</span></p></body></html>"))
         self.groupBox_27.setTitle(_translate("MainWindow", "Sensor 6"))
         self.s6_measurement_output.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:32pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:20pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">76</span><span style=\" font-size:24pt; vertical-align:super;\">o</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">66% RH</span></p></body></html>"))
         self.groupBox_28.setTitle(_translate("MainWindow", "Sensor 1"))
         self.s1_measurement_output.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:32pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:20pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">71</span><span style=\" font-size:24pt; vertical-align:super;\">o</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">61% RH</span></p></body></html>"))
         self.groupBox_29.setTitle(_translate("MainWindow", "Sensor 3"))
         self.s3_measurement_output.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:32pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:20pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">73</span><span style=\" font-size:24pt; vertical-align:super;\">o</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">63% RH</span></p></body></html>"))
         self.groupBox_30.setTitle(_translate("MainWindow", "Sensor 5"))
         self.s5_measurement_output.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:32pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:20pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">75</span><span style=\" font-size:24pt; vertical-align:super;\">o</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">65% RH</span></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.currentMeasurements), _translate("MainWindow", "Current"))

@@ -80,9 +80,14 @@ class AppWindow(QMainWindow):
 		}
 
 
-		# Test groupbox clickability
+		for sensor_num in self.alarm_inputs.keys():
 
-		self.ui.groupBox_13.clicked.connect(self.groupbox_click)
+			for input_field, sb_obj in self.alarm_inputs[sensor_num].items():
+				sb_obj.valueChanged.connect(self.alarm_input_handler)
+
+
+
+
 		## Connect the alarm inputs to their respective functions
 		# for sensor_num, input_box in self.alarm_inputs.items():
 		# 	input_box.valueChanged.connect()
@@ -113,19 +118,6 @@ class AppWindow(QMainWindow):
 		
 		# self.ui.s6_T_alarm.valueChanged.connect()
 		# self.ui.s6_H_alarm.valueChanged.connect()
-
-
-		## Error displays
-		# s5_error_output
-
-
-		# self.function_indicator = {
-		# 							1: self.ui.led_sensor,
-		# 							2: self.ui.led_temp,
-		# 							3: self.ui.led_hum,
-		# 							4: self.ui.led_t_alarm,
-		# 							5: self.ui.led_h_alarm
-		# }
 
 		self.functionNumber = 1
 
@@ -160,10 +152,19 @@ class AppWindow(QMainWindow):
 		self.ui.plotWidget.canvas.ax[2][1].set_title('Sensor 6')
 		self.ui.plotWidget.canvas.draw()
 
+	def alarm_input_handler(self):
 
-	def groupbox_click():
+		for num in self.alarm_inputs.keys():
 
-		print("Groupbox clicked")
+			for input_field, sb_obj in self.alarm_inputs[num].items():
+				new_alarm_val = sb_obj.value()
+
+				if(input_field == 'Temp'):
+					UI_Helper.setSensorAlarmVal(new_alarm_val, num, 4)
+				else:
+					UI_Helper.setSensorAlarmVal(new_alarm_val, num, 5)
+
+
 
 	def select_button(self):
 
@@ -227,7 +228,8 @@ class AppWindow(QMainWindow):
 	def periodic_update(self):
 		self.monitor.read_sensor_data()
 
-		for sensor in range(1, NUM_SENSORS+1):
+		for sensor in self.measurement_output_displays.keys():
+
 			lastMeasurement = self.monitor.get_last_sensor_data(sensor)
 			if(lastMeasurement == None):
 				return
@@ -260,10 +262,15 @@ class AppWindow(QMainWindow):
 				display.setText(" 888 ")
 				break
 
-			temp = lastMeasurement['CurrentTemp']
-			hum = lastMeasurement['CurrentHumidity']
+			temp = UI_Helper.roundFloat(lastMeasurement['CurrentTemp'])
+			hum = UI_Helper.roundFloat(lastMeasurement['CurrentHumidity'])
 			# Add T and H alarms in here too?
-			display_string = str(temp) + " deg F\n" + str(hum) + " % RH" 
+
+			t_alarm = UI_Helper.getSensorAlarm(sensor_num, 4)['count']
+			h_alarm = UI_Helper.getSensorAlarm(sensor_num, 5)['count']
+
+
+			display_string = str(temp) + " F\n" + str(hum) + "% RH\n" + "Alarms:\n" + "T: " + str(t_alarm) + " H: " + str(h_alarm)
 			display.setText(display_string)
 
 

@@ -1,5 +1,6 @@
 
 from Monitor import Monitor
+import math
 
 # Define any needed LUT-like objects for the UI
 
@@ -71,6 +72,15 @@ def fetchRequestedField(function_number):
 	fields = UI_FUNCTIONS
 
 	return fields[function_number]
+
+
+def roundFloat(float_val):
+
+	num = float_val * 100
+	num = math.floor(num)
+	num = num / 100
+	return num
+
 
 
 # Create Monitor Class

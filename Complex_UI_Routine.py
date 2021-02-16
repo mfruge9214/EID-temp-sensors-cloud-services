@@ -6,6 +6,7 @@ from PyQt5.QtCore import QTimer
 from Complex_UI import Ui_MainWindow
 from Monitor import Monitor
 import UI_Event_Handling as UI_Helper
+import numpy as np
 
 
 # cmd to convert from .ui file to .py file
@@ -249,6 +250,53 @@ class AppWindow(QMainWindow):
 
 		self.update_measurements()
 		#self.update_errors()
+		self.update_graphs()
+
+	def update_graphs(self):
+		temps = {}
+		hums = {}
+		for sensor_id, sensor_data in self.monitor.all_sensor_data.items():
+			if sensor_id not in temps:
+				temps[sensor_id] = []
+				hums[sensor_id] = []
+			for entry in sensor_data:
+				temp = entry['CurrentTemp']
+				humidity = entry['CurrentHumidity']
+				if temp == 999.0:
+					temp = np.nan
+				if humidity == 999.0:
+					humidity = np.nan
+				temps[sensor_id].append(temp)
+				hums[sensor_id].append(humidity)
+
+		numEntries = len(temps[1])
+
+		timevals = np.arange(0, 10*numEntries, 10)
+
+		self.ui.plotWidget.canvas.fig.clear()
+		self.ui.plotWidget.canvas.ax = self.ui.plotWidget.canvas.fig.subplots(3, 2)
+
+		for sensor_id in self.monitor.all_sensor_data.keys():
+			tempList = temps[sensor_id]
+			humList = hums[sensor_id]
+			title = 'Sensor ' + str(sensor_id)
+			row = int((sensor_id-1) / 2)
+			col = (sensor_id-1) % 2
+
+			# plotting help from:
+			# https://matplotlib.org/3.2.1/gallery/subplots_axes_and_figures/two_scales.html
+			temp_color = 'tab:blue'
+			hum_color = 'tab:orange'
+			self.ui.plotWidget.canvas.ax[row][col].set_title(title)
+			self.ui.plotWidget.canvas.ax[row][col].set_xlabel('time (s)')
+			self.ui.plotWidget.canvas.ax[row][col].set_ylabel('Temperature (F)', color=temp_color)
+			self.ui.plotWidget.canvas.ax[row][col].plot(timevals, tempList, color=temp_color)
+			self.ui.plotWidget.canvas.ax[row][col].tick_params(axis='y', labelcolor=temp_color)
+			ax_hum = self.ui.plotWidget.canvas.ax[row][col].twinx()
+			ax_hum.plot(timevals, humList, color=hum_color)
+			ax_hum.set_ylabel('Humidity (%)', color=hum_color)
+			ax_hum.tick_params(axis='y', labelcolor=hum_color)
+		self.ui.plotWidget.canvas.draw()
 
 
 	def update_measurements(self):

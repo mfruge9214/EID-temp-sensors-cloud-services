@@ -248,10 +248,9 @@ class AppWindow(QMainWindow):
 		## Construct string
 
 		for sensor_num, display in self.measurement_output_displays.items():
-			lastMeasurement = self.monitor.get_last_sensor_data(sensor_num)
 
 			try:
-
+				lastMeasurement = self.monitor.get_last_sensor_data(sensor_num)
 				temp = UI_Helper.roundFloat(lastMeasurement['CurrentTemp'])
 				hum = UI_Helper.roundFloat(lastMeasurement['CurrentHumidity'])
 
@@ -272,17 +271,18 @@ class AppWindow(QMainWindow):
 	def update_errors(self):
 
 		for sensor_num, display in self.error_outputs.items():
-			lastMeasurement = self.monitor.get_last_sensor_data(sensor_num)
-
-			if(lastMeasurement == None):
-				display.setText(" 888 ")
-				break
-			else:
+			try:
+				lastMeasurement = self.monitor.get_last_sensor_data(sensor_num)
 				num_errors = lastMeasurement['ErrorCount']
 				if(num_errors == 1):
 					display_string = str(num_errors) + " Error"
 				else:
 					display_string = str(num_errors) + " Errors"
+
+			except:
+				display_string = '888'
+				print("No Valid Dat Yet")
+
 
 			display.setText(display_string)
 

@@ -1,5 +1,9 @@
 import Complex_UI_Routine
 import Simple_UI_Routine
+import subprocess
+
+command = 'node TempSensorApplication.js 6'
+subprocess.Popen(command.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 print('Welcome to the Temperature Sensor Simulation!')
 print('Which UI do you want to run?')

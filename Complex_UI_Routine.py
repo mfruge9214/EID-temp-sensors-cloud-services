@@ -119,7 +119,7 @@ class AppWindow(QMainWindow):
 		self.editing_alarms = False
 
 		self.ui.tabWidget.setCurrentIndex(0)
-		
+
 		# Initialize UI timer for updates
 		self.timer = QTimer()
 
@@ -250,17 +250,21 @@ class AppWindow(QMainWindow):
 		for sensor_num, display in self.measurement_output_displays.items():
 			lastMeasurement = self.monitor.get_last_sensor_data(sensor_num)
 
-			if(lastMeasurement == None):
-				display.setText(" 888 ")
-				break
+			try:
 
-			temp = UI_Helper.roundFloat(lastMeasurement['CurrentTemp'])
-			hum = UI_Helper.roundFloat(lastMeasurement['CurrentHumidity'])
+				temp = UI_Helper.roundFloat(lastMeasurement['CurrentTemp'])
+				hum = UI_Helper.roundFloat(lastMeasurement['CurrentHumidity'])
 
-			if self.monitor.fahrenheit:
-				display_string = str(temp) + " F\n" + str(hum) + "% RH\n"
-			else:
-				display_string = str(temp) + " C\n" + str(hum) + "% RH\n"
+				if self.monitor.fahrenheit:
+					display_string = str(temp) + " F\n" + str(hum) + "% RH\n"
+				else:
+					display_string = str(temp) + " C\n" + str(hum) + "% RH\n"
+
+			except:
+				display_string = '888'
+				print("No Valid Dat Yet")
+
+			
 			display.setText(display_string)
 
 

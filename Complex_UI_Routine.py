@@ -316,9 +316,3 @@ def UI_Run():
 	w = AppWindow()
 	w.show() 
 	sys.exit(app.exec_())
-
-
-app = QApplication(sys.argv)
-w = AppWindow()
-w.show() 
-sys.exit(app.exec_())

@@ -282,7 +282,10 @@ class AppWindow(QMainWindow):
 			hum_color = 'tab:orange'
 			self.ui.plotWidget.canvas.ax[row][col].set_title(title)
 			self.ui.plotWidget.canvas.ax[row][col].set_xlabel('time (s)')
-			self.ui.plotWidget.canvas.ax[row][col].set_ylabel('Temperature (F)', color=temp_color)
+			units = '(F)'
+			if not self.monitor.fahrenheit:
+				units = '(C)'
+			self.ui.plotWidget.canvas.ax[row][col].set_ylabel('Temperature ' + units, color=temp_color)
 			self.ui.plotWidget.canvas.ax[row][col].plot(timevals, tempList, color=temp_color)
 			self.ui.plotWidget.canvas.ax[row][col].tick_params(axis='y', labelcolor=temp_color)
 			ax_hum = self.ui.plotWidget.canvas.ax[row][col].twinx()

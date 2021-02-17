@@ -68,6 +68,33 @@ class AppWindow(QMainWindow):
 								}
 						}
 
+		self.alarm_count_outputs = {
+								1: {
+									'Temp': self.ui.s1_Talarm_cnt_out,
+									'Hum' : self.ui.s1_Halarm_cnt_out
+								},
+								2: {
+									'Temp': self.ui.s2_Talarm_cnt_out,
+									'Hum' : self.ui.s2_Halarm_cnt_out
+								},
+								3: {
+									'Temp': self.ui.s3_Talarm_cnt_out,
+									'Hum' : self.ui.s3_Halarm_cnt_out
+								},
+								4: {
+									'Temp': self.ui.s4_Talarm_cnt_out,
+									'Hum' : self.ui.s4_Halarm_cnt_out
+								},
+								5: {
+									'Temp': self.ui.s5_Talarm_cnt_out,
+									'Hum' : self.ui.s5_Halarm_cnt_out
+								},
+								6: {
+									'Temp': self.ui.s6_Talarm_cnt_out,
+									'Hum' : self.ui.s6_Halarm_cnt_out
+								}
+						}
+
 		self.error_outputs = {
 
 								1: self.ui.s1_error_output,
@@ -80,51 +107,16 @@ class AppWindow(QMainWindow):
 		}
 
 
+		# Connect alarm input boxes to event handler
 		for sensor_num in self.alarm_inputs.keys():
 
 			for input_field, sb_obj in self.alarm_inputs[sensor_num].items():
 				sb_obj.valueChanged.connect(self.alarm_input_handler)
 
 
-
-
-		## Connect the alarm inputs to their respective functions
-		# for sensor_num, input_box in self.alarm_inputs.items():
-		# 	input_box.valueChanged.connect()
-
-		## First screen output boxes
-		# self.ui.s1_measurement_output
-		# self.ui.s2_measurement_output
-		# self.ui.s3_measurement_output
-		# self.ui.s4_measurement_output
-		# self.ui.s5_measurement_output
-		# self.ui.s6_measurement_output
-
-		## Alarm settings
-		# self.ui.s1_T_alarm.valueChanged.connect()
-		# self.ui.s1_H_alarm.valueChanged.connect()
-		
-		# self.ui.s2_T_alarm.valueChanged.connect()
-		# self.ui.s2_H_alarm.valueChanged.connect()
-		
-		# self.ui.s3_T_alarm.valueChanged.connect()
-		# self.ui.s3_H_alarm.valueChanged.connect()
-		
-		# self.ui.s4_T_alarm.valueChanged.connect()
-		# self.ui.s4_H_alarm.valueChanged.connect()
-		
-		# self.ui.s5_T_alarm.valueChanged.connect()
-		# self.ui.s5_H_alarm.valueChanged.connect()
-		
-		# self.ui.s6_T_alarm.valueChanged.connect()
-		# self.ui.s6_H_alarm.valueChanged.connect()
-
 		self.functionNumber = 1
 
 		self.displayCelcius = False
-
-		# Initialize the state of the UI
-		#self.ui.screen_output.setText("INITIALIZING")
 
 		# Initialize UI timer for updates
 		self.timer = QTimer()
@@ -248,7 +240,8 @@ class AppWindow(QMainWindow):
 	def updateOutput(self):
 
 		self.update_measurements()
-		#self.update_errors()
+		self.update_alarm_counts()
+		self.update_errors()
 
 
 	def update_measurements(self):
@@ -270,8 +263,43 @@ class AppWindow(QMainWindow):
 			h_alarm = UI_Helper.getSensorAlarm(sensor_num, 5)['count']
 
 
-			display_string = str(temp) + " F\n" + str(hum) + "% RH\n" + "Alarms:\n" + "T: " + str(t_alarm) + " H: " + str(h_alarm)
+			display_string = str(temp) + " F\n" + str(hum) + "% RH\n"
 			display.setText(display_string)
+
+
+
+	def update_errors(self):
+
+		for sensor_num, display in self.error_outputs.items():
+			lastMeasurement = self.monitor.get_last_sensor_data(sensor_num)
+
+			if(lastMeasurement == None):
+				display.setText(" 888 ")
+				break
+			else:
+				num_errors = lastMeasurement['ErrorCount']
+				if(num_errors == 1):
+					display_string = str(num_errors) + " Error"
+				else:
+					display_string = str(num_errors) + " Errors"
+
+			display.setText(display_string)
+
+
+	def update_alarm_counts(self):
+
+		for sensor_num in self.alarm_count_outputs.keys():
+
+			for alarm_field, display in self.alarm_count_outputs[sensor_num].items():
+
+				if(alarm_field == "Temp"):
+					alarm = UI_Helper.getSensorAlarm(sensor_num, 4)['count']
+					display.setText(str(alarm))
+				else:
+					alarm = UI_Helper.getSensorAlarm(sensor_num, 5)['count']
+					display.setText(str(alarm))
+
+
 
 
 

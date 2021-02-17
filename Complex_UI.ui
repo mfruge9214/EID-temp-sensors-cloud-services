@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="currentMeasurements">
      <attribute name="title">
@@ -307,7 +307,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>40</x>
          <y>20</y>
-         <width>120</width>
+         <width>151</width>
          <height>80</height>
         </rect>
        </property>
@@ -327,13 +327,36 @@ p, li { white-space: pre-wrap; }
          <number>85</number>
         </property>
        </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="s5_Talarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_21">
        <property name="geometry">
         <rect>
          <x>40</x>
          <y>100</y>
-         <width>120</width>
+         <width>151</width>
          <height>80</height>
         </rect>
        </property>
@@ -356,13 +379,36 @@ p, li { white-space: pre-wrap; }
          <number>75</number>
         </property>
        </widget>
+       <widget class="QTextBrowser" name="s5_Halarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_13">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>20</y>
+        <x>60</x>
+        <y>30</y>
         <width>191</width>
         <height>181</height>
        </rect>
@@ -381,7 +427,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>30</x>
          <y>20</y>
-         <width>120</width>
+         <width>151</width>
          <height>80</height>
         </rect>
        </property>
@@ -401,13 +447,36 @@ p, li { white-space: pre-wrap; }
          <number>81</number>
         </property>
        </widget>
+       <widget class="QTextBrowser" name="s1_Talarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QGroupBox" name="gb_98">
        <property name="geometry">
         <rect>
          <x>30</x>
          <y>100</y>
-         <width>120</width>
+         <width>151</width>
          <height>80</height>
         </rect>
        </property>
@@ -428,6 +497,29 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="value">
          <number>71</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="s1_Halarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
         </property>
        </widget>
       </widget>
@@ -452,7 +544,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>40</x>
          <y>20</y>
-         <width>120</width>
+         <width>151</width>
          <height>80</height>
         </rect>
        </property>
@@ -472,13 +564,36 @@ p, li { white-space: pre-wrap; }
          <number>82</number>
         </property>
        </widget>
+       <widget class="QTextBrowser" name="s2_Talarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_14">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_9">
        <property name="geometry">
         <rect>
          <x>40</x>
          <y>100</y>
-         <width>120</width>
+         <width>151</width>
          <height>80</height>
         </rect>
        </property>
@@ -499,6 +614,29 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="value">
          <number>72</number>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="s2_Halarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_13">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
         </property>
        </widget>
       </widget>
@@ -523,7 +661,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>30</x>
          <y>20</y>
-         <width>120</width>
+         <width>161</width>
          <height>80</height>
         </rect>
        </property>
@@ -543,13 +681,36 @@ p, li { white-space: pre-wrap; }
          <number>83</number>
         </property>
        </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="s3_Talarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_11">
        <property name="geometry">
         <rect>
          <x>30</x>
          <y>100</y>
-         <width>120</width>
+         <width>161</width>
          <height>80</height>
         </rect>
        </property>
@@ -570,6 +731,29 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="value">
          <number>73</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="s3_Halarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
         </property>
        </widget>
       </widget>
@@ -594,7 +778,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>30</x>
          <y>20</y>
-         <width>120</width>
+         <width>161</width>
          <height>80</height>
         </rect>
        </property>
@@ -614,13 +798,36 @@ p, li { white-space: pre-wrap; }
          <number>84</number>
         </property>
        </widget>
+       <widget class="QTextBrowser" name="s4_Talarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_12">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_19">
        <property name="geometry">
         <rect>
          <x>30</x>
          <y>100</y>
-         <width>120</width>
+         <width>161</width>
          <height>80</height>
         </rect>
        </property>
@@ -641,6 +848,29 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="value">
          <number>74</number>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="s4_Halarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_11">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
         </property>
        </widget>
       </widget>
@@ -665,7 +895,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>40</x>
          <y>20</y>
-         <width>120</width>
+         <width>151</width>
          <height>80</height>
         </rect>
        </property>
@@ -685,13 +915,36 @@ p, li { white-space: pre-wrap; }
          <number>86</number>
         </property>
        </widget>
+       <widget class="QTextBrowser" name="s6_Talarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_10">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_23">
        <property name="geometry">
         <rect>
          <x>40</x>
          <y>100</y>
-         <width>120</width>
+         <width>151</width>
          <height>80</height>
         </rect>
        </property>
@@ -712,6 +965,29 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="value">
          <number>76</number>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="s6_Halarm_cnt_out">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>40</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_9">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Count</string>
         </property>
        </widget>
       </widget>

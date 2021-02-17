@@ -193,8 +193,8 @@ class AppWindow(QMainWindow):
 
 		self.ui.screen_output.setText(displayString)
 
-
-app = QApplication(sys.argv)
-w = AppWindow()
-w.show() 
-sys.exit(app.exec_())
+def UI_Run():
+	app = QApplication(sys.argv)
+	w = AppWindow()
+	w.show() 
+	sys.exit(app.exec_())

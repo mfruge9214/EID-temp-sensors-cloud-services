@@ -165,26 +165,26 @@ class AppWindow(QMainWindow):
 			if(self.displayCelcius):
 				dataString = str(self.monitor.fahrenheit_to_celsius(neededData)) + " Deg C "
 			else:
-				dataString = str(neededData) + " Deg F "
+				dataString = str(UI_Helper.roundFloat(neededData)) + " Deg F "
 
 		elif(function == 'CurrentHumidity'):
 
-			dataString = str(neededData) + " % RH  "
+			dataString = str(UI_Helper.roundFloat(neededData)) + " % RH  "
 
 		elif(function == 'TempAlarmCount'):
 
 			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)
 
 			if(self.displayCelcius):
-				dataString = "Thresh:" + str(self.monitor.fahrenheit_to_celsius(alarm['val'])) + " Deg C, Count:" + str(alarm['count'])
+				dataString = "Thresh:" + str(UI_Helper.roundFloat(self.monitor.fahrenheit_to_celsius(alarm['val']))) + " Deg C, Count:" + str(alarm['count'])
 			else:
-				dataString = "Thresh:" + str(alarm['val']) + " Deg F, Count:" + str(alarm['count'])
+				dataString = "Thresh:" + str(UI_Helper.roundFloat(alarm['val'])) + " Deg F, Count:" + str(alarm['count'])
 
 		elif(function == 'HumAlarmCount'):
 
 			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)
 
-			dataString = "Thresh:" + str(alarm['val']) + "% RH, Count:" + str(alarm['count'])
+			dataString = "Thresh:" + str(UI_Helper.roundFloat(alarm['val'])) + "% RH, Count:" + str(alarm['count'])
 
 
 		displayString += dataString

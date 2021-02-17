@@ -31,7 +31,7 @@ class Monitor:
 		self.password = 'eid' # super secure
 		self.cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+self.server+';DATABASE='+self.database+';UID='+self.username+';PWD='+self.password)
 		self.cursor = self.cnxn.cursor()
-		self.fahrenheit = False
+		self.fahrenheit = True
 
 		# dictionary that will contain calculations on the sensor data
 		self.all_sensor_calculations = {}
@@ -78,6 +78,15 @@ class Monitor:
 			# deg_f is None (no valid entries yet). This is ok, so we'll just pass
 			pass
 		return deg_c
+
+	def celsius_to_fahrenheit(self, deg_c):
+		deg_f = None
+		try:
+			deg_f = (deg_c * 9/5) + 32
+		except TypeError:
+			# deg_f is None (no valid entries yet). This is ok, so we'll just pass
+			pass
+		return deg_f
 
 	def get_last_sensor_data(self, sensor_number):
 

@@ -3,6 +3,8 @@ from Monitor import Monitor
 import math
 
 # Define any needed LUT-like objects for the UI
+# Create Monitor Class
+Monitor = Monitor()
 
 UI_FUNCTIONS  = {
 					1: 'SensorNumber',
@@ -82,8 +84,16 @@ def roundFloat(float_val):
 	return num
 
 
+def convertAlarmVals(F_flag):
 
-# Create Monitor Class
-Monitor = Monitor()
+	for sensor_num, entry in SensorTAlarms.items():
+		if(not F_flag):
+			SensorTAlarms[sensor_num]['val'] = math.floor(Monitor.fahrenheit_to_celsius(SensorTAlarms[sensor_num]['val']))
+		else:
+			SensorTAlarms[sensor_num]['val'] = math.floor(Monitor.celsius_to_fahrenheit(SensorTAlarms[sensor_num]['val']))
+
+	return SensorTAlarms
+
+
 
 

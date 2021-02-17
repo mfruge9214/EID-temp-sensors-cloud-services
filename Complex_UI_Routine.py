@@ -107,6 +107,7 @@ class AppWindow(QMainWindow):
 
 		}
 
+		self.ui.slider_F_C.sliderReleased.connect(self.disp_format_slider_moved)
 
 		# Connect alarm input boxes to event handler
 		for sensor_num in self.alarm_inputs.keys():
@@ -115,10 +116,10 @@ class AppWindow(QMainWindow):
 				sb_obj.valueChanged.connect(self.alarm_input_handler)
 
 
-		self.functionNumber = 1
+		self.editing_alarms = False
 
-		self.displayCelcius = False
-
+		self.ui.tabWidget.setCurrentIndex(0)
+		
 		# Initialize UI timer for updates
 		self.timer = QTimer()
 
@@ -126,95 +127,40 @@ class AppWindow(QMainWindow):
 		self.monitor = Monitor()
 
 		# Register functions to corresponding event
-		# self.ui.pb_select.released.connect(self.select_button)
-		# self.ui.pb_up.released.connect(self.up_button)
-		# self.ui.pb_down.released.connect(self.down_button)
-		# self.ui.pb_convertTemp.released.connect(self.convertTemp_button)
 		self.timer.timeout.connect(self.periodic_update)
 		self.timer.start(10000)
-		x=range(0, 10)
-		y=range(0, 20, 2)
-		#self.ui.plotWidget.canvas.subplot(232)
-		#self.ui.plotWidget.canvas.fig.add
-		self.ui.plotWidget.canvas.ax[1][1].plot(x, y)
-		self.ui.plotWidget.canvas.ax[0][0].set_title('Sensor 1')
-		self.ui.plotWidget.canvas.ax[0][1].set_title('Sensor 2')
-		self.ui.plotWidget.canvas.ax[1][0].set_title('Sensor 3')
-		self.ui.plotWidget.canvas.ax[1][1].set_title('Sensor 4')
-		self.ui.plotWidget.canvas.ax[2][0].set_title('Sensor 5')
-		self.ui.plotWidget.canvas.ax[2][1].set_title('Sensor 6')
-		self.ui.plotWidget.canvas.draw()
+		self.updateOutput()
 
 	def alarm_input_handler(self):
 
-		for num in self.alarm_inputs.keys():
+		if( not self.editing_alarms):
+			for num in self.alarm_inputs.keys():
 
-			for input_field, sb_obj in self.alarm_inputs[num].items():
-				new_alarm_val = sb_obj.value()
+				for input_field, sb_obj in self.alarm_inputs[num].items():
+					new_alarm_val = sb_obj.value()
 
-				if(input_field == 'Temp'):
-					UI_Helper.setSensorAlarmVal(new_alarm_val, num, 4)
-				else:
-					UI_Helper.setSensorAlarmVal(new_alarm_val, num, 5)
+					if(input_field == 'Temp'):
+						UI_Helper.setSensorAlarmVal(new_alarm_val, num, 4)
+					else:
+						UI_Helper.setSensorAlarmVal(new_alarm_val, num, 5)
 
 
+	def disp_format_slider_moved(self):
 
-	def select_button(self):
+		lastState = self.monitor.fahrenheit
 
-		# Uncheck current button
-		for num in range(1, 6):
-			self.function_indicator[self.functionNumber].setChecked(False)
+		if(self.ui.slider_F_C.value() == 0):
 
-		# Wrap around or not
-		if(self.functionNumber < 5):
-			self.functionNumber += 1
+			self.monitor.fahrenheit = True
+			if(lastState != self.monitor.fahrenheit):
+				UI_Helper.convertAlarmVals(self.monitor.fahrenheit)
+
 		else:
-			self.functionNumber = 1
+			self.monitor.fahrenheit = False
+			if(lastState != self.monitor.fahrenheit):
+				UI_Helper.convertAlarmVals(self.monitor.fahrenheit)
 
-		# Check next box
-		self.function_indicator[self.functionNumber].setChecked(True)
-
-		self.updateOutput()
-
-		
-		
-	# Up button released event
-	def up_button(self):
-
-		function = UI_Helper.UI_FUNCTIONS[self.functionNumber]
-
-		if(function == 'SensorNumber'):
-			if self.currentSensor < NUM_SENSORS:
-				self.currentSensor += 1
-
-		elif(function == 'TempAlarmCount' or function == 'HumAlarmCount'):
-
-			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)['val']
-			alarm += 1
-			UI_Helper.setSensorAlarmVal(alarm, self.currentSensor, self.functionNumber)
-
-		self.updateOutput()
-
-	# Down Button released event
-	def down_button(self):
-
-		function = UI_Helper.UI_FUNCTIONS[self.functionNumber]
-
-		if(function == 'SensorNumber'):
-			if self.currentSensor > 1:
-				self.currentSensor -= 1
-
-		elif(function == 'TempAlarmCount' or function == 'HumAlarmCount'):
-
-			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)['val']
-			alarm -= 1
-			UI_Helper.setSensorAlarmVal(alarm, self.currentSensor, self.functionNumber)
-
-		self.updateOutput()
-
-
-	def convertTemp_button(self):
-		self.displayCelcius = ~(self.displayCelcius)
+		self.monitor.read_sensor_data()
 		self.updateOutput()
 
 
@@ -239,15 +185,17 @@ class AppWindow(QMainWindow):
 		self.updateOutput()
 
 	def updateOutput(self):
-
 		self.update_measurements()
-		self.update_alarm_counts()
+		self.update_alarm_displays()
 		self.update_errors()
 		self.update_graphs()
 
 	def update_graphs(self):
 		temps = {}
 		hums = {}
+
+		if(self.monitor.all_sensor_data == {}):
+			return
 		for sensor_id, sensor_data in self.monitor.all_sensor_data.items():
 			if sensor_id not in temps:
 				temps[sensor_id] = []
@@ -308,13 +256,11 @@ class AppWindow(QMainWindow):
 
 			temp = UI_Helper.roundFloat(lastMeasurement['CurrentTemp'])
 			hum = UI_Helper.roundFloat(lastMeasurement['CurrentHumidity'])
-			# Add T and H alarms in here too?
 
-			t_alarm = UI_Helper.getSensorAlarm(sensor_num, 4)['count']
-			h_alarm = UI_Helper.getSensorAlarm(sensor_num, 5)['count']
-
-
-			display_string = str(temp) + " F\n" + str(hum) + "% RH\n"
+			if self.monitor.fahrenheit:
+				display_string = str(temp) + " F\n" + str(hum) + "% RH\n"
+			else:
+				display_string = str(temp) + " C\n" + str(hum) + "% RH\n"
 			display.setText(display_string)
 
 
@@ -337,8 +283,9 @@ class AppWindow(QMainWindow):
 			display.setText(display_string)
 
 
-	def update_alarm_counts(self):
+	def update_alarm_displays(self):
 
+		self.editing_alarms = True
 		for sensor_num in self.alarm_count_outputs.keys():
 
 			for alarm_field, display in self.alarm_count_outputs[sensor_num].items():
@@ -350,8 +297,25 @@ class AppWindow(QMainWindow):
 					alarm = UI_Helper.getSensorAlarm(sensor_num, 5)['count']
 					display.setText(str(alarm))
 
+		for sensor_num in self.alarm_inputs.keys():
+
+			for alarm_field, display in self.alarm_inputs[sensor_num].items():
+
+				if(alarm_field == "Temp"):
+					alarm = UI_Helper.getSensorAlarm(sensor_num, 4)['val']
+					display.setValue(int(alarm))
+				else:
+					alarm = UI_Helper.getSensorAlarm(sensor_num, 5)['val']
+					display.setValue(int(alarm))
+
+		self.editing_alarms = False
 
 
+def UI_Run():
+	app = QApplication(sys.argv)
+	w = AppWindow()
+	w.show() 
+	sys.exit(app.exec_())
 
 
 app = QApplication(sys.argv)

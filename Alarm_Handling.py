@@ -1,3 +1,11 @@
+ 	#########################
+# File: Alarm_Handling.py
+# Author: Mike Fruge & Bryan Cisneros
+# Description:
+# 		File helps implement user side alarm tracking, as well as other helper functions
+#		used by both UI designs, but are not monitor concerned
+#		
+#########################
 
 from Monitor import Monitor
 import math
@@ -6,6 +14,8 @@ import math
 # Create Monitor Class
 Monitor = Monitor()
 
+
+# Simple UI display Functions
 UI_FUNCTIONS  = {
 					1: 'SensorNumber',
 					2: 'CurrentTemp',
@@ -16,7 +26,7 @@ UI_FUNCTIONS  = {
 
 
 
-
+# Alarm Value dictionaries that both UI's use
 SensorTAlarms = {
 					1: {'val': 50, 'count': 0},
 					2: {'val': 50, 'count': 0},
@@ -37,7 +47,10 @@ SensorHAlarms = {
 
 
 
-
+# Set sensor alarm value
+# setVal: Desired alarm value
+# sensor_number: Sensor number
+# function_number: index of corresponding entry in UI_FUNCTIONS
 def setSensorAlarmVal(setVal, sensor_number, function_number):
 
 	if(UI_FUNCTIONS[function_number] == "TempAlarmCount"):
@@ -47,7 +60,9 @@ def setSensorAlarmVal(setVal, sensor_number, function_number):
 		SensorHAlarms[sensor_number]['val'] = setVal
 
 
-
+# Increment sensor alarm count
+# sensor_number: Sensor number
+# function_number: index of corresponding entry in UI_FUNCTIONS
 def incSensorAlarmCount(sensor_number, function_number):
 
 	if(UI_FUNCTIONS[function_number] == "TempAlarmCount"):
@@ -57,7 +72,9 @@ def incSensorAlarmCount(sensor_number, function_number):
 		SensorHAlarms[sensor_number]['count'] = SensorHAlarms[sensor_number]['count'] + 1
 
 
-
+# Get sensor alarm dict, {count, value}
+# sensor_number: Sensor number
+# function_number: index of corresponding entry in UI_FUNCTIONS
 def getSensorAlarm(sensor_number, function_number):
 
 	if(UI_FUNCTIONS[function_number] == "TempAlarmCount"):
@@ -66,15 +83,7 @@ def getSensorAlarm(sensor_number, function_number):
 	elif(UI_FUNCTIONS[function_number] == "HumAlarmCount"):
 		return SensorHAlarms[sensor_number]
 
-
-
-
-def fetchRequestedField(function_number):
-
-	fields = UI_FUNCTIONS
-
-	return fields[function_number]
-
+# Round floating point value to 2 decimal places
 
 def roundFloat(float_val):
 
@@ -83,7 +92,7 @@ def roundFloat(float_val):
 	num = num / 100
 	return num
 
-
+# Used to convert the values in T alarm dict from F to C to allow monitoring
 def convertAlarmVals(F_flag):
 
 	for sensor_num, entry in SensorTAlarms.items():

@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import QTimer
 from Complex_UI import Ui_MainWindow
 from Monitor import Monitor
-import UI_Event_Handling as UI_Helper
+import Alarm_Handling as UI_Helper
 import numpy as np
 
 

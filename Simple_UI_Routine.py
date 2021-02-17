@@ -1,3 +1,15 @@
+ 	#########################
+# File: Simple_UI_Routine.py
+# Author: Mike Fruge & Bryan Cisneros
+# Description:
+# 		Main window and functionality for Simple UI
+#		Main Simple UI Design file
+#				Utilizes montor API to retrieve data, Alarm Handling to process incoming data, and PyQT for interface and widgets
+#		
+#########################
+
+
+
 import sys
 
 
@@ -5,14 +17,12 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import QTimer
 from Simple_UI import Ui_MainWindow
 from Monitor import Monitor
-import UI_Event_Handling as UI_Helper
+import Alarm_Handling as UI_Helper
 
 
 # cmd to convert from .ui file to .py file
 # python -m PyQt5.uic.pyuic -x Simple_UI.ui -o Simple_UI.py
 
-
-# For now, just putting these defines here
 
 NUM_SENSORS = 6
 

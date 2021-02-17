@@ -2,6 +2,7 @@ import Complex_UI_Routine
 import Simple_UI_Routine
 import subprocess
 
+# start the temp sensors in a subprocess
 command = 'node TempSensorApplication.js 6'
 subprocess.Popen(command.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 

@@ -93,7 +93,7 @@ class AppWindow(QMainWindow):
 		elif(function == 'TempAlarmCount' or function == 'HumAlarmCount'):
 
 			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)['val']
-			alarm += 1;
+			alarm += 1
 			UI_Helper.setSensorAlarmVal(alarm, self.currentSensor, self.functionNumber)
 
 		self.updateOutput()
@@ -110,7 +110,7 @@ class AppWindow(QMainWindow):
 		elif(function == 'TempAlarmCount' or function == 'HumAlarmCount'):
 
 			alarm = UI_Helper.getSensorAlarm(self.currentSensor, self.functionNumber)['val']
-			alarm -= 1;
+			alarm -= 1
 			UI_Helper.setSensorAlarmVal(alarm, self.currentSensor, self.functionNumber)
 
 		self.updateOutput()
@@ -124,6 +124,7 @@ class AppWindow(QMainWindow):
 	def read_data(self):
 		self.monitor.read_sensor_data()
 
+		# for each sensor, get the last measurement and update the alarm count as needed
 		for sensor in range(1, NUM_SENSORS+1):
 			lastMeasurement = self.monitor.get_last_sensor_data(sensor)
 			if(lastMeasurement == None):
@@ -141,6 +142,7 @@ class AppWindow(QMainWindow):
 		self.updateOutput()
 
 	def updateOutput(self):
+		# get the last measurement
 		lastMeasurement = self.monitor.get_last_sensor_data(self.currentSensor)
 
 		## Ensure there is valid data to display
@@ -193,6 +195,7 @@ class AppWindow(QMainWindow):
 
 		self.ui.screen_output.setText(displayString)
 
+# run the UI
 def UI_Run():
 	app = QApplication(sys.argv)
 	w = AppWindow()

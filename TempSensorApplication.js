@@ -4,7 +4,6 @@
 * Description: This file is the master sensor process, which will spawn the child processes and run through each sensor process
 */
 
-const { TempSensor, randomvalue } = require('./TempSensor.js');
 const { fork } = require('child_process');
 
 //Obtain User Input for number of sensors

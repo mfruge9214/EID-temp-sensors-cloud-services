@@ -31,6 +31,7 @@ class Monitor:
 		self.password = 'eid' # super secure
 		self.cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+self.server+';DATABASE='+self.database+';UID='+self.username+';PWD='+self.password)
 		self.cursor = self.cnxn.cursor()
+		self.fahrenheit = True
 
 		# dictionary that will contain calculations on the sensor data
 		self.all_sensor_calculations = {}
@@ -60,52 +61,13 @@ class Monitor:
 					self.all_sensor_data[entry['SensorNumber']] = []
 				self.all_sensor_data[entry['SensorNumber']].append(entry)
 
-
-	def run_calculations(self):
-		# clear the current calculated data. We will re-calculate all of it
-		self.all_sensor_calculations.clear()
-		
-		# for each sensor in all_sensor_data
-		for sensor_id, sensor_data in self.all_sensor_data.items():
-			# Reduce sensor_data to the last 10 entries, but if there are less than
-			# 10 entries available, use all available entries
-			entries_to_average = 10
-			if len(sensor_data) < 10:
-				entries_to_average = len(sensor_data)
-			sensor_data = sensor_data[-entries_to_average:]
-
-			low = None
-			high = None
-			sum = 0.0
-			num_valid_entries = 0
-			for entry in sensor_data:
-				temperature = entry['CurrentTemp']
-				if temperature == 999:
-					# invalid temperature reading. We'll just ignore this entry
-					# and continue
-					continue
-
-				if not low or temperature < low:
-					low = temperature
-				if not high or temperature > high:
-					high = temperature
-				sum += temperature
-				num_valid_entries += 1
-
-			# calculate average
-			avg_f = None
-			if num_valid_entries:
-				avg_f = sum / num_valid_entries
-
-			# if the sensor number isn't in the dictionary yet, add an
-			# empty dictionary for that sensor to the calculations dictionary
-			if sensor_id not in self.all_sensor_calculations:
-				self.all_sensor_calculations[sensor_id] = {}
-
-			# update the global dictionary with the calculated values
-			self.all_sensor_calculations[sensor_id]['low'] = low
-			self.all_sensor_calculations[sensor_id]['high'] = high
-			self.all_sensor_calculations[sensor_id]['avg_f'] = avg_f
+		#print(self.all_sensor_data)
+		if not self.fahrenheit:
+			for sensor_id, data in self.all_sensor_data.items():
+				#for measurement in data:
+				for i in range(len(data)):
+					if data[i]['CurrentTemp'] != 999:
+						self.all_sensor_data[sensor_id][i]['CurrentTemp'] = self.fahrenheit_to_celsius(data[i]['CurrentTemp'])
 
 
 	def fahrenheit_to_celsius(self, deg_f):
@@ -116,6 +78,23 @@ class Monitor:
 			# deg_f is None (no valid entries yet). This is ok, so we'll just pass
 			pass
 		return deg_c
+
+	def celsius_to_fahrenheit(self, deg_c):
+		deg_f = None
+		try:
+			deg_f = (deg_c * 9/5) + 32
+		except TypeError:
+			# deg_f is None (no valid entries yet). This is ok, so we'll just pass
+			pass
+		return deg_f
+
+	def get_last_sensor_data(self, sensor_number):
+
+		if(self.all_sensor_data): return self.all_sensor_data[sensor_number][-1]
+
+		else: return None
+		
+
 
 
 	def print_report(self):

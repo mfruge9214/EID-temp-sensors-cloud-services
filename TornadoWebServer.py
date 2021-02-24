@@ -4,24 +4,26 @@
 import tornado.ioloop
 from tornado.websocket import WebSocketHandler, WebSocketClosedError
 from tornado.web import RequestHandler
+from tornado.httpserver import HTTPServer
 
 
+# used information from this tutorial: https://os.mbed.com/cookbook/Websockets-Server
 # used information from this video: https://www.youtube.com/watch?v=SkETonolR3U
 
-class IndexHandler(RequestHandler):
+# class WebSocketsHandler(RequestHandler):
 
-	# Redirect to sensor table page
-	def get(self):
-		self.redirect('/sensor-table')
+# 	# Redirect to sensor table page
+# 	def get(self):
+# 		self.redirect('/sensor-table')
 
 
 
-class SensorTableHandler(RequestHandler):
+# class SensorTableHandler(RequestHandler):
 
-	# Render table page
-	def get(self):
-		print("SensorHandler:")
-		self.render("Sensor_Table.html")
+# 	# Render table page
+# 	def get(self):
+# 		print("SensorHandler:")
+# 		self.render("Sensor_Table.html")
 
 
 class SensorTableWebSocketHandler(WebSocketHandler):
@@ -31,25 +33,37 @@ class SensorTableWebSocketHandler(WebSocketHandler):
 
     def on_message(self, message):
     	self.write_message(u"You said: " + message)
+    	self.render("html_test.py")
 
     def on_close(self):
     	print("WebSocket closed")
 
+    def check_origin(self, origin):
+    	return True
+
+
 
 
 urls = [
-	(r"/$", IndexHandler),
-	(r"/sensor-table", SensorTableHandler),
-	(r"/sensor-table/ws$", SensorTableWebSocketHandler)
+	(r"/ws", SensorTableWebSocketHandler)
 	]
 
+
+port = 8888
 
 def make_app(endpoints):
     return tornado.web.Application(
     	endpoints
     	)
 
+
+
 if __name__ == "__main__":
-    app = make_app(urls)
-    app.listen(8888)
-    tornado.ioloop.IOLoop.current().start()
+	print(urls)
+	app = make_app(urls)
+	server = HTTPServer(app)
+	server.listen(port)
+	tornado.ioloop.IOLoop.instance().start()
+
+
+

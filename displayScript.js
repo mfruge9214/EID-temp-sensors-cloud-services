@@ -1,10 +1,9 @@
-$(document).ready(function() {
-    // all custom jQuery will go here
+      // Send websocket message function
+  $("#sensor1_t_req").click(function(evt) {
+      $("#sensor1_out_data").html("Clicked");
+      // log("Sending Message: "+$("#message").val());
+      // ws.send($("#message").val());
+  });
 
-    $("#sensor1").click(function() {
 
-    	$("#sensor1_out").html("Sup Beotch")
-    });
-
-
-});
+  

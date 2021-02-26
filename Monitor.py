@@ -95,6 +95,16 @@ class Monitor:
 		else: return None
 		
 
+	def get_specific_sensor_data_records(self, sensor_number, idx):
+
+		if(self.all_sensor_data):
+			try:
+				return self.all_sensor_data[sensor_number][idx]
+			except:
+				return None
+
+		else: return None
+
 
 
 	def print_report(self):

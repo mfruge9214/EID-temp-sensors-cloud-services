@@ -5,41 +5,41 @@ import tornado.ioloop
 from tornado.websocket import WebSocketHandler, WebSocketClosedError
 from tornado.web import RequestHandler
 from tornado.httpserver import HTTPServer
+from Monitor import Monitor
+import Server_Python_API as API
+import json
 
 
 # used information from this tutorial: https://os.mbed.com/cookbook/Websockets-Server
 # used information from this video: https://www.youtube.com/watch?v=SkETonolR3U
 
-# class WebSocketsHandler(RequestHandler):
-
-# 	# Redirect to sensor table page
-# 	def get(self):
-# 		self.redirect('/sensor-table')
-
-
-
-# class SensorTableHandler(RequestHandler):
-
-# 	# Render table page
-# 	def get(self):
-# 		print("SensorHandler:")
-# 		self.render("Sensor_Table.html")
-
 
 class SensorTableWebSocketHandler(WebSocketHandler):
-    def open(self):
-    	print("WebSocket open")
-    	self.write_message("Hello, world")
+    
+	def open(self):
+		self.monitor = Monitor()
+		print("WebSocket open")
 
-    def on_message(self, message):
-    	self.write_message(u"You said: " + message)
-    	self.render("html_test.py")
 
-    def on_close(self):
-    	print("WebSocket closed")
+	def on_message(self, message):
 
-    def check_origin(self, origin):
-    	return True
+		received = json.loads(message)
+
+		print(received)
+		response = {}
+
+		response['output'] = API.ParseMessage(received)
+		response['command'] = received['command']
+		response['trigger_id'] = received['trigger_id']
+		response['output_id'] = received['output_id']
+
+		self.write_message(json.dumps(response))
+
+	def on_close(self):
+		print("WebSocket closed")
+
+	def check_origin(self, origin):
+		return True
 
 
 

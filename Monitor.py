@@ -95,6 +95,13 @@ class Monitor:
 		else: return None
 		
 
+	def get_last_10(self):
+		last_10 = {}
+		if self.all_sensor_data:
+			for sensor_id, data in self.all_sensor_data.items():
+				last_10[sensor_id] = data[-10:]
+
+		return last_10
 
 
 	def print_report(self):

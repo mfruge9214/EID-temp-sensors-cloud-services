@@ -33,6 +33,7 @@ def generate_graph(data):
     timevals = np.arange(0, 10*numEntries, 10)
 
     fig, ax = plt.subplots(3, 2)
+    fig.subplots_adjust(hspace=0.8, wspace=0.75, top=0.92, bottom=0.12)
     # Plot all the sensor data!
     for sensor_id in data.keys():
         tempList = temps[sensor_id]

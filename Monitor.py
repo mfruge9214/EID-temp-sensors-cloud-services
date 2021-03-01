@@ -110,7 +110,8 @@ class Monitor:
 		if self.all_sensor_data:
 			for sensor_id, data in self.all_sensor_data.items():
 				last_10[sensor_id] = data[-10:]
-
+		for key in last_10.keys():
+			last_10[key].reverse()
 		return last_10
 
 

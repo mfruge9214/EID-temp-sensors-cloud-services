@@ -31,6 +31,7 @@
     var output_id = data['output_id'];
 
     $("#" + output_id).html(data['output']);
+    $("#" + output_id).css("background-color", "#4CAF50");
 
   };
 
@@ -53,7 +54,7 @@
 
     var sensor_num;
 
-    var table = $(".allSensorData")
+    var table = $(".recentSensorData")
 
     for (sensor_num in outputs){
 
@@ -61,7 +62,7 @@
 
       // Identify the list element we need to append to
 
-      var sensor_list_el = $(".allSensorData").find("ul#sensor" + sensor_num.toString() + "_list_data");
+      var sensor_list_el = $(".recentSensorData").find("ol#sensor" + sensor_num.toString() + "_list_data");
 
       sensor_list_el.empty();
 

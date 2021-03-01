@@ -17,7 +17,7 @@ import json
 class SensorTableWebSocketHandler(WebSocketHandler):
     
 	def open(self):
-		self.monitor = Monitor()
+		API.monitor = Monitor()
 		print("WebSocket open")
 
 

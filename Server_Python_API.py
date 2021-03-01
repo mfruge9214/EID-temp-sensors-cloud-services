@@ -23,7 +23,7 @@ def formatOutput(sensor_data):
 		unit_string = " C , "
 
 	try:
-		output = "Timestamp: " + str(sensor_data['Hour']) + ":" + str(sensor_data['Minute']) + ":" + str(sensor_data['Second'])
+		output = "Time: " + str(sensor_data['Hour']) + ":" + str(sensor_data['Minute']) + ":" + str(sensor_data['Second'])
 
 		temp_str = " " + str(roundFloat(sensor_data['CurrentTemp'])) + unit_string + str(roundFloat(sensor_data['CurrentHumidity'])) + "% RH"
 

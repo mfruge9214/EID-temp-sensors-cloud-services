@@ -7,7 +7,7 @@
 */
 
 const { TempSensor, randomvalue, parseDateTime } = require('./TempSensor.js');
-const { createNewEntry } = require('./Database.js');
+const { createNewEntry, clearTable } = require('./Database.js');
 
 
 // Initialize sensor on first run through with passed in parameters
@@ -23,6 +23,10 @@ console.log(' Sensor Number:', sensor.number);
 var count = 0;
 
 setInterval(function () {
+
+	if (count === 0){
+		clearTable();
+	}
 
 	// This code is executed in intervals set by the second argument in ms
 	count++;

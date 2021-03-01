@@ -1,4 +1,5 @@
 from Monitor import Monitor
+from graph import generate_graph
 import math
 
 
@@ -91,9 +92,8 @@ def ParseMessage(msg_obj):
 
 
 	elif(command == 'G'):
-		
-		print("Nothing Yet")
-
+		last_10 = monitor.get_last_10()
+		generate_graph(last_10)
 
 	return output
 

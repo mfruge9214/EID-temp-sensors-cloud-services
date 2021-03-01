@@ -71,12 +71,10 @@
 
       }
     }
+  };
 
-      
-
-
-
-    
+  handleGCommand = function(data){
+    $("#G_graph_img").attr('src', 'eid_graph.png')
   };
 
 
@@ -110,6 +108,9 @@
         handleCCommand(dataBack)
       }
 
+      if(command == "G"){
+        handleGCommand(dataBack)
+      }
 
       };
 
@@ -141,6 +142,16 @@
       message['trigger_id'] = this.id
 
       
+      ws.send(JSON.stringify(message));
+    });
+
+    $("#G_graph").click(function(evt){
+
+      var message = message_struct;
+
+      message['command']  = "G"
+      message['trigger_id'] = this.id
+
       ws.send(JSON.stringify(message));
     });
 

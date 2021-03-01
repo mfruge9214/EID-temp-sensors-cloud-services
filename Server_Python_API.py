@@ -92,7 +92,7 @@ def ParseMessage(msg_obj):
 
 	elif(command == 'G'):
 		
-
+		print("Nothing Yet")
 
 
 	return output

@@ -48,7 +48,34 @@
 
   handleCCommand = function(data){
 
-    log(data)
+    // Dictionary where keys = sensor numbers and values are arrays of up to 10 strings of formatted output
+    var outputs = data['output'];
+
+    var sensor_num;
+
+    var table = $(".allSensorData")
+
+    for (sensor_num in outputs){
+
+      var outputText_list = outputs[sensor_num];
+
+      // Identify the list element we need to append to
+
+      var sensor_list_el = $(".allSensorData").find("ul#sensor" + sensor_num.toString() + "_list_data");
+
+      sensor_list_el.empty();
+
+      for (entry in outputText_list){
+
+        sensor_list_el.append("<li>" + outputText_list[entry] + "</li>")
+
+      }
+    }
+
+      
+
+
+
     
   };
 
@@ -106,6 +133,16 @@
       log("***Connection Opened***");
     };
 
+    $("#C_allData").click(function(evt){
+
+      var message = message_struct;
+
+      message['command']  = "C"
+      message['trigger_id'] = this.id
+
+      
+      ws.send(JSON.stringify(message));
+    });
 
     // Individual data request events
     $(".t_req").click(function(evt) {
@@ -141,18 +178,13 @@
       ws.send(JSON.stringify(message));
 
 
+      $(".t_req").click()
+
+      $("#C_allData").click()
+
     });
 
 
-    $("#C_allData").click(function(evt){
 
-      var message = message_struct;
-
-      message['command']  = "C"
-      message['trigger_id'] = this.id
-
-      
-      ws.send(JSON.stringify(message));
-    });
 });
 

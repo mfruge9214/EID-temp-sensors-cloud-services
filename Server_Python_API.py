@@ -90,6 +90,10 @@ def ParseMessage(msg_obj):
 		output = data_list
 
 
+	elif(command == 'G'):
+		
+
+
 
 	return output
 

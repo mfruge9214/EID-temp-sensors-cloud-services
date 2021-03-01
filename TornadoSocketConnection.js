@@ -74,7 +74,9 @@
   };
 
   handleGCommand = function(data){
-    $("#G_graph_img").attr('src', 'eid_graph.png')
+    // workaround to reload image every time from:
+    // https://stackoverflow.com/questions/2104949/how-to-reload-refresh-an-elementimage-in-jquery
+    $("#G_graph_img").attr('src', 'eid_graph.png?timestamp=' + new Date().getTime())
   };
 
 
@@ -192,6 +194,8 @@
       $(".t_req").click()
 
       $("#C_allData_Tornado").click()
+
+      $("#G_graph").click()
 
     });
 

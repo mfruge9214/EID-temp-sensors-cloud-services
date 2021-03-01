@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def generate_graph(data):
+def generate_graph(data, units):
     temps = {}
     hums = {}
 
@@ -33,7 +33,7 @@ def generate_graph(data):
     timevals = np.arange(0, 10*numEntries, 10)
 
     fig, ax = plt.subplots(3, 2)
-    fig.subplots_adjust(hspace=0.8, wspace=0.75, top=0.92, bottom=0.12)
+    fig.subplots_adjust(hspace=0.88, wspace=0.75, top=0.92, bottom=0.12)
     # Plot all the sensor data!
     for sensor_id in data.keys():
         tempList = temps[sensor_id]
@@ -48,9 +48,6 @@ def generate_graph(data):
         hum_color = 'tab:orange'
         ax[row][col].set_title(title)
         ax[row][col].set_xlabel('time (s)')
-        units = '(F)'
-        # if not self.monitor.fahrenheit:
-        #     units = '(C)'
         ax[row][col].set_ylabel('Temperature ' + units, color=temp_color)
         ax[row][col].plot(timevals, tempList, color=temp_color)
         ax[row][col].tick_params(axis='y', labelcolor=temp_color)

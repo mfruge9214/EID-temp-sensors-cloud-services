@@ -93,7 +93,11 @@ def ParseMessage(msg_obj):
 
 	elif(command == 'G'):
 		last_10 = monitor.get_last_10()
-		generate_graph(last_10)
+		if monitor.fahrenheit:
+			units = '(F)'
+		else:
+			units = '(C)'
+		generate_graph(last_10, units)
 
 	return output
 

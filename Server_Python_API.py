@@ -52,7 +52,7 @@ def ParseMessage(msg_obj):
 			if(monitor.fahrenheit):
 				output = "Fahrenheit"
 			else:
-				output = "Celcius"
+				output = "Celsius"
 
 	
 

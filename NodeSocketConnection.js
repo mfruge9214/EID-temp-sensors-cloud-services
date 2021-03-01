@@ -1,23 +1,25 @@
 var node_host = 'localhost';
 var node_port = 9898;
 var node_uri = '';
+var node_celsius = false;
 
 
 
 message_struct = {
                   'command':     "None",
                   'trigger_id':  "None",
-                  'output_id':   "None"
+                  'output_id':   "None",
+                  'celsius_flag':     "None"
 }
 
 // log function
-log = function(data){
+node_log = function(data){
   $("div#terminal").prepend("</br>" +data);
   console.log(data);
 };
 
 
-handleICommand = function(data){
+node_handleICommand = function(data){
 
   var num_str = data['trigger_id'][-3];
 
@@ -29,7 +31,7 @@ handleICommand = function(data){
 
 };
 
-handleSCommand = function(data){
+node_handleSCommand = function(data){
 
   var num_str = data['trigger_id'][-3];
 
@@ -41,10 +43,33 @@ handleSCommand = function(data){
   
 };
 
-handleCCommand = function(data){
+node_handleCCommand = function(data){
 
   log(data)
-  
+
+  // Dictionary where keys = sensor numbers and values are arrays of up to 10 strings of formatted output
+  var outputs = data['output'];
+
+  var sensor_num;
+
+  var table = $(".allSensorData")
+
+  for (sensor_num in outputs) {
+
+    var outputText_list = outputs[sensor_num];
+
+    // Identify the list element we need to append to
+
+    var sensor_list_el = $(".allSensorData").find("ul#sensor" + sensor_num.toString() + "_list_data");
+
+    sensor_list_el.empty();
+
+    for (entry in outputText_list) {
+
+      sensor_list_el.append("<li>" + outputText_list[entry] + "</li>")
+
+    }
+  }
 };
 
 
@@ -60,22 +85,22 @@ $(document).ready(function () {
 
 
     node_ws.onmessage = function(evt) {
-      log("Message Received: " + evt.data);
+      node_log("Message Received: " + evt.data);
       
       var dataBack = JSON.parse(evt.data);
 
       command = dataBack['command']
 
       if(command == "I"){
-        handleICommand(dataBack)
+        node_handleICommand(dataBack)
       }
 
       if(command == "S"){
-        handleSCommand(dataBack)
+        node_handleSCommand(dataBack)
       }
 
       if(command == "C"){
-        handleCCommand(dataBack)
+        node_handleCCommand(dataBack)
       }
 
 
@@ -83,7 +108,7 @@ $(document).ready(function () {
 
     // Close Websocket callback
     node_ws.onclose = function(evt) {
-      log("***Connection Closed***");
+      node_log("***Connection Closed***");
       alert("Connection close");
       // $("#host").css("background", "#ff0000"); 
       // $("#port").css("background", "#ff0000"); 
@@ -98,7 +123,7 @@ $(document).ready(function () {
       // $("#port").css("background", "#00ff00"); 
       // $("#uri").css("background", "#00ff00");
       // $("div#message_details").show();
-      log("***Connection Opened***");
+      node_log("***Connection Opened***");
     };
 
 
@@ -114,6 +139,7 @@ $(document).ready(function () {
       message['command']  = "I"
       message['output_id'] = output_box.attr("id")
       message['trigger_id'] = this.id
+      message['celsius_flag'] = node_celsius
 
       //  send serialized dictionary of output box and button that caused event 
       node_ws.send(JSON.stringify(message));
@@ -122,29 +148,21 @@ $(document).ready(function () {
 
     $("#S_convertTemp").click(function(evt){
 
-      var group = $(this).parent();
+      node_celsius = ! node_celsius
 
-      var output_box = $(group).find("p");
-
-      var message = message_struct;
-
-      message['command']  = "S"
-      message['output_id'] = output_box.attr("id")
-      message['trigger_id'] = this.id
-
-
-      node_ws.send(JSON.stringify(message));
+      //node_ws.send(JSON.stringify(message));
 
 
     });
 
 
-    $("#C_allData").click(function(evt){
+    $("#C_allData_Node").click(function(evt){
 
       var message = message_struct;
 
       message['command']  = "C"
       message['trigger_id'] = this.id
+      message['celsius_flag'] = node_celsius
 
       
       node_ws.send(JSON.stringify(message));

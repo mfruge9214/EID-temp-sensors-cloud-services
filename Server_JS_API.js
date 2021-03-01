@@ -5,13 +5,23 @@ function roundFloat(float_val) {
 	return Math.round(float_val * 100) / 100
 }
 
-function formatOutput(sensor_data) {
+function convertTemp(temp, celsius_flag){
+	if(celsius_flag && temp != 999){
+		temp = (temp - 32) * 5/9
+	}
+	return temp
+}
+
+function formatOutput(sensor_data, celsius_flag) {
 
 	var output = ""
 	var unit_string = " F, "
+	if (celsius_flag) {
+		unit_string = " C, "
+	}
 
 	output = "Timestamp: " + sensor_data['Hour'] + ":" + sensor_data['Minute'] + ":" + sensor_data['Second']
-	var temp_str = " " + roundFloat(sensor_data['CurrentTemp']) + unit_string + roundFloat(sensor_data['CurrentHumidity']) + "% RH"
+	var temp_str = " " + roundFloat(convertTemp(sensor_data['CurrentTemp'], celsius_flag)) + unit_string + roundFloat(sensor_data['CurrentHumidity']) + "% RH"
 	output += temp_str
 
 	return output

@@ -56,7 +56,7 @@ wsServer.on('request', function (request) {
       if (command == 'I') {
         var sensor_number = parseInt(received['trigger_id'].charAt(7))
         var sensor_data = get_last_measurement(result.recordset, sensor_number)
-        response['output'] = formatOutput(sensor_data)
+        response['output'] = formatOutput(sensor_data, received['celsius_flag'])
       }
       else if (command == 'C') {
         var last_10 = get_last_10(result.recordset)
@@ -65,7 +65,7 @@ wsServer.on('request', function (request) {
         for (var key in last_10) {
           formatted_last_10[key] = []
           last_10[key].forEach(function (item, index) {
-            formatted_last_10[key].push(formatOutput(item));
+            formatted_last_10[key].unshift(formatOutput(item, received['celsius_flag']));
           });
         };
 

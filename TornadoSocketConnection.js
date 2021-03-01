@@ -133,7 +133,7 @@
       log("***Connection Opened***");
     };
 
-    $("#C_allData").click(function(evt){
+    $("#C_allData_Tornado").click(function(evt){
 
       var message = message_struct;
 
@@ -180,7 +180,7 @@
 
       $(".t_req").click()
 
-      $("#C_allData").click()
+      $("#C_allData_Tornado").click()
 
     });
 

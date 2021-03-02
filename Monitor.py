@@ -95,12 +95,23 @@ class Monitor:
 		else: return None
 		
 
+	def get_specific_sensor_data_records(self, sensor_number, idx):
+
+		if(self.all_sensor_data):
+			try:
+				return self.all_sensor_data[sensor_number][idx]
+			except:
+				return None
+
+		else: return None
+
 	def get_last_10(self):
 		last_10 = {}
 		if self.all_sensor_data:
 			for sensor_id, data in self.all_sensor_data.items():
 				last_10[sensor_id] = data[-10:]
-
+		for key in last_10.keys():
+			last_10[key].reverse()
 		return last_10
 
 

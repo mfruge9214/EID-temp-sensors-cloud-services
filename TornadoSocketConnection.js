@@ -72,12 +72,12 @@
 
       }
     }
+  };
 
-      
-
-
-
-    
+  handleGCommand = function(data){
+    // workaround to reload image every time from:
+    // https://stackoverflow.com/questions/2104949/how-to-reload-refresh-an-elementimage-in-jquery
+    $("#G_graph_img").attr('src', 'eid_graph.png?timestamp=' + new Date().getTime())
   };
 
 
@@ -111,6 +111,9 @@
         handleCCommand(dataBack)
       }
 
+      if(command == "G"){
+        handleGCommand(dataBack)
+      }
 
       };
 
@@ -134,7 +137,7 @@
       log("***Connection Opened***");
     };
 
-    $("#C_allData").click(function(evt){
+    $("#C_allData_Tornado").click(function(evt){
 
       var message = message_struct;
 
@@ -142,6 +145,16 @@
       message['trigger_id'] = this.id
 
       
+      ws.send(JSON.stringify(message));
+    });
+
+    $("#G_graph").click(function(evt){
+
+      var message = message_struct;
+
+      message['command']  = "G"
+      message['trigger_id'] = this.id
+
       ws.send(JSON.stringify(message));
     });
 
@@ -181,7 +194,9 @@
 
       $(".t_req").click()
 
-      $("#C_allData").click()
+      $("#C_allData_Tornado").click()
+
+      $("#G_graph").click()
 
     });
 

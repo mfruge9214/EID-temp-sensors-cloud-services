@@ -9,6 +9,7 @@
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <script src ="TornadoSocketConnection.js"></script>
     <link rel="stylesheet" href="styles.css">
+	<script src ="NodeSocketConnection.js"></script>
 </head>
 <body>
 	<h1>EID Temperature Sensor Data: Web Socket Client</h1>
@@ -31,7 +32,7 @@
 				<td class="s_num">1</td>
 				<td>
 					<button  id="Isensor1_t" class ="t_req" type="button">Tornado</button>
-					<button  id="Isensor1_n" class ="n_req" type="button">NET</button>
+					<button  id="Isensor1_n" class ="n_req" type="button">Node</button>
 				</td>
 				<td>
 					<p id="sensor1_out_data">None</p>
@@ -42,7 +43,7 @@
 				<td class="s_num">2</td>
 				<td>
 					<button  id="Isensor2_t" class ="t_req" type="button">Tornado</button>
-					<button  id="Isensor2_n" class ="n_req" type="button">NET</button>
+					<button  id="Isensor2_n" class ="n_req" type="button">Node</button>
 				</td>
 				<td>
 					<p id="sensor2_out_data">None</p>
@@ -53,7 +54,7 @@
 				<td class="s_num">3</td>
 				<td>
 					<button  id="Isensor3_t" class ="t_req" type="button">Tornado</button>
-					<button  id="Isensor3_n" class ="n_req" type="button">NET</button>
+					<button  id="Isensor3_n" class ="n_req" type="button">Node</button>
 				</td>
 				<td>
 					<p id="sensor3_out_data">None</p>
@@ -63,7 +64,7 @@
 				<td class="s_num">4</td>
 				<td>
 					<button  id="Isensor4_t" class ="t_req" type="button">Tornado</button>
-					<button  id="Isensor4_n" class ="n_req" type="button">NET</button>
+					<button  id="Isensor4_n" class ="n_req" type="button">Node</button>
 				</td>
 				<td>
 					<p id="sensor4_out_data">None</p>
@@ -74,7 +75,7 @@
 				<td class="s_num">5</td>
 				<td>
 					<button  id="Isensor5_t" class ="t_req" type="button">Tornado</button>
-					<button  id="Isensor5_n" class ="n_req" type="button">NET</button>
+					<button  id="Isensor5_n" class ="n_req" type="button">Node</button>
 				</td>
 				<td>
 					<p id="sensor5_out_data">None</p>
@@ -85,7 +86,7 @@
 				<td class="s_num">6</td>
 				<td>
 					<button  id="Isensor6_t" class ="t_req" type="button">Tornado</button>
-					<button  id="Isensor6_n" class ="n_req" type="button">NET</button>
+					<button  id="Isensor6_n" class ="n_req" type="button">Node</button>
 				</td>
 				<td>
 					<p id="sensor6_out_data">None</p>
@@ -96,8 +97,10 @@
 	</div>
 
 	<div class ="sensorDataCollection">
-		<button id ="C_allData" class="recentDataButton">Retrieve Recent Sensor Data</button>
-		<table class="recentSensorData">
+
+		<button id ="C_allData_Tornado">Retrieve All - Tornado</button>
+		<button id ="C_allData_Node">Retrieve All - Node</button>
+		<table class="allSensorData">
 			<tr>
 				<th>Sensor 1</th>
 				<th>Sensor 2</th>
@@ -131,6 +134,12 @@
 
 
 		
+	</div>
+	<div>
+		<button id ="G_graph">Generate Graph</button>
+	</div>
+	<div>
+		<img id="G_graph_img" src="" alt="Graph of sensor data">
 	</div>
 </body>
 </html>

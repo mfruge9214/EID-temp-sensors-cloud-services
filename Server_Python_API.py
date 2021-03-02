@@ -1,4 +1,5 @@
 from Monitor import Monitor
+from graph import generate_graph
 import math
 
 
@@ -52,7 +53,7 @@ def ParseMessage(msg_obj):
 			if(monitor.fahrenheit):
 				output = "Fahrenheit"
 			else:
-				output = "Celcius"
+				output = "Celsius"
 
 	
 
@@ -91,9 +92,12 @@ def ParseMessage(msg_obj):
 
 
 	elif(command == 'G'):
-		
-		print("Nothing Yet")
-
+		last_10 = monitor.get_last_10()
+		if monitor.fahrenheit:
+			units = '(F)'
+		else:
+			units = '(C)'
+		generate_graph(last_10, units)
 
 	return output
 

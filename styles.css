@@ -1,0 +1,102 @@
+div {
+  border: 3px solid black;
+  align-content: center;
+}
+
+
+
+
+.t_req {
+  background-color: #4CAF50; /* Green */
+  border: 2px solid black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.n_req {
+  background-color: aqua; /* Green */
+  border: 2px solid black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button{
+	border: 3px solid black;
+	font-size: 20px;
+	margin: 50px;
+	width: 25%;
+}
+
+button.recentDataButton {
+	border: 3px solid black;
+	width: 33%;
+	font-size: 20px;
+	margin: 50px;
+}
+
+
+button.settings_b {
+	margin: 20px;
+	width: 25%;
+}
+
+table.indivData {
+	border-collapse: collapse;
+	width: 95%;
+}
+
+table.recentSensorData {
+	width: 95%;
+}
+
+
+th {
+	font-size: 24px;
+	background-color: grey;
+	color: white;
+}
+
+td{
+	text-align: center;
+	height: 50px;
+	vertical-align: middle;
+	border: 1px solid blue;
+}
+
+td.s_num {
+	font-size: 40px;
+}
+
+h1 {
+  color: black;
+  font-size: 40px;
+  text-align: center;
+}
+
+h2 {
+  color: black;
+  font-size: 32px;
+  text-align: center;
+}
+
+ol li{
+	font-size: 24px;
+	padding: 10px 3px;
+}
+
+p {
+	padding: 20px;
+	font-size: 24px;
+}

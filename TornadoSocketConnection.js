@@ -12,7 +12,8 @@
   message_struct = {
                     'command':     "None",
                     'trigger_id':  "None",
-                    'output_id':   "None"
+                    'output_id':   "None",
+                    'timestamp':   "None"
   }
 
   // log function
@@ -31,7 +32,7 @@
     var output_id = data['output_id'];
 
     $("#" + output_id).html(data['output']);
-    $("#" + output_id).css("background-color", "#4CAF50");
+    
 
   };
 
@@ -47,7 +48,19 @@
     
   };
 
-  handleCCommand = function(data){
+  handleCCommand = function(data, timestamp){
+
+    log(data)
+
+    var start_time = data['timestamp']
+
+    log(start_time)
+
+    log(timestamp)
+
+    var elapsedTime = Math.floor(timestamp) - Math.floor(start_time)
+    
+    $(".elapsedTime").html(elapsedTime.toString() + " Milliseconds");
 
     // Dictionary where keys = sensor numbers and values are arrays of up to 10 strings of formatted output
     var outputs = data['output'];
@@ -93,11 +106,12 @@
 
 
     ws.onmessage = function(evt) {
-      log("Message Received: " + evt.data);
       
       var dataBack = JSON.parse(evt.data);
 
       command = dataBack['command']
+
+      var resp_timestamp = evt.timeStamp;
 
       if(command == "I"){
         handleICommand(dataBack)
@@ -108,7 +122,7 @@
       }
 
       if(command == "C"){
-        handleCCommand(dataBack)
+        handleCCommand(dataBack, resp_timestamp)
       }
 
       if(command == "G"){
@@ -139,12 +153,16 @@
 
     $("#C_allData_Tornado").click(function(evt){
 
+      var timestamp = evt.timeStamp;
       var message = message_struct;
 
+      log(evt)
+
+      message['timestamp'] = timestamp;
       message['command']  = "C"
       message['trigger_id'] = this.id
 
-      
+      log(message)
       ws.send(JSON.stringify(message));
     });
 
@@ -170,6 +188,8 @@
       message['command']  = "I"
       message['output_id'] = output_box.attr("id")
       message['trigger_id'] = this.id
+
+      $("#" + output_box.attr("id")).css("background-color", "#4CAF50");
 
       //  send serialized dictionary of output box and button that caused event 
       ws.send(JSON.stringify(message));

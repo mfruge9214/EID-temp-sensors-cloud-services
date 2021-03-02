@@ -50,7 +50,7 @@ wsServer.on('request', function (request) {
     response['command'] = received['command']
     response['trigger_id'] = received['trigger_id']
     response['output_id'] = received['output_id']
-
+    response['timestamp'] = received['timestamp']
 
     getAllTableData().then(function (result) {
       if (command == 'I') {

@@ -19,9 +19,9 @@ def formatOutput(sensor_data):
 	output = ""
 
 	if(monitor.fahrenheit):
-		unit_string = " F , "
+		unit_string = " F, "
 	else:
-		unit_string = " C , "
+		unit_string = " C, "
 
 	try:
 		output = "Time: " + str(sensor_data['Hour']) + ":" + str(sensor_data['Minute']) + ":" + str(sensor_data['Second'])

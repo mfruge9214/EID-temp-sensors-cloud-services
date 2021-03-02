@@ -20,7 +20,7 @@ function formatOutput(sensor_data, celsius_flag) {
 		unit_string = " C, "
 	}
 
-	output = "Timestamp: " + sensor_data['Hour'] + ":" + sensor_data['Minute'] + ":" + sensor_data['Second']
+	output = "Time: " + sensor_data['Hour'] + ":" + sensor_data['Minute'] + ":" + sensor_data['Second']
 	var temp_str = " " + roundFloat(convertTemp(sensor_data['CurrentTemp'], celsius_flag)) + unit_string + roundFloat(sensor_data['CurrentHumidity']) + "% RH"
 	output += temp_str
 

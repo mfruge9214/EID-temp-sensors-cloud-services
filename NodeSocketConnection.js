@@ -9,7 +9,8 @@ message_struct = {
                   'command':     "None",
                   'trigger_id':  "None",
                   'output_id':   "None",
-                  'celsius_flag':     "None"
+                  'celsius_flag':     "None",
+                  'timestamp': "None" 
 }
 
 // log function
@@ -19,58 +20,62 @@ node_log = function(data){
 };
 
 
-node_handleICommand = function(data){
+// node_handleICommand = function(data){
 
-  var num_str = data['trigger_id'][-3];
+//   var num_str = data['trigger_id'][-3];
 
-  var trigger_id = data['trigger_id'];
+//   var trigger_id = data['trigger_id'];
 
-  var output_id = data['output_id'];
+//   var output_id = data['output_id'];
 
-  $("#" + output_id).html(data['output']);
+//   $("#" + output_id).html(data['output']);
 
-};
+// };
 
-node_handleSCommand = function(data){
+// node_handleSCommand = function(data){
 
-  var num_str = data['trigger_id'][-3];
+//   var num_str = data['trigger_id'][-3];
 
-  var trigger_id = data['trigger_id'];
+//   var trigger_id = data['trigger_id'];
 
-  var output_id = data['output_id'];
+//   var output_id = data['output_id'];
 
-  $("#" + output_id).html(data['output']);
+//   $("#" + output_id).html(data['output']);
   
-};
+// };
 
-node_handleCCommand = function(data){
+// node_handleCCommand = function(data, timestamp){
 
-  log(data)
+//   var start_time = data['timestamp']
 
-  // Dictionary where keys = sensor numbers and values are arrays of up to 10 strings of formatted output
-  var outputs = data['output'];
+//   log(timestamp)
+//   log("StartTime" + start_time)
 
-  var sensor_num;
+//   $(".elapsedTime").html()
+//   // Dictionary where keys = sensor numbers and values are arrays of up to 10 strings of formatted output
+//   var outputs = data['output'];
 
-  var table = $(".allSensorData")
+//   var sensor_num;
 
-  for (sensor_num in outputs) {
+//   var table = $(".recentSensorData")
 
-    var outputText_list = outputs[sensor_num];
+//   for (sensor_num in outputs) {
 
-    // Identify the list element we need to append to
+//     var outputText_list = outputs[sensor_num];
 
-    var sensor_list_el = $(".allSensorData").find("ul#sensor" + sensor_num.toString() + "_list_data");
+//     // Identify the list element we need to append to
 
-    sensor_list_el.empty();
+//     var sensor_list_el = $(".recentSensorData").find("ol#sensor" + sensor_num.toString() + "_list_data");
 
-    for (entry in outputText_list) {
+//     sensor_list_el.empty();
 
-      sensor_list_el.append("<li>" + outputText_list[entry] + "</li>")
+//     for (entry in outputText_list) {
 
-    }
-  }
-};
+//       sensor_list_el.append("<li>" + outputText_list[entry] + "</li>")
+
+//     }
+//   }
+// };
 
 
 $(document).ready(function () {
@@ -88,19 +93,20 @@ $(document).ready(function () {
       node_log("Message Received: " + evt.data);
       
       var dataBack = JSON.parse(evt.data);
+      var timestamp = evt.timeStamp
 
       command = dataBack['command']
 
       if(command == "I"){
-        node_handleICommand(dataBack)
+        handleICommand(dataBack)
       }
 
       if(command == "S"){
-        node_handleSCommand(dataBack)
+        handleSCommand(dataBack)
       }
 
       if(command == "C"){
-        node_handleCCommand(dataBack)
+        handleCCommand(dataBack, timestamp)
       }
 
 
@@ -141,6 +147,9 @@ $(document).ready(function () {
       message['trigger_id'] = this.id
       message['celsius_flag'] = node_celsius
 
+
+      $("#" + output_box.attr("id")).css("background-color", "aqua");
+
       //  send serialized dictionary of output box and button that caused event 
       node_ws.send(JSON.stringify(message));
     });
@@ -160,10 +169,13 @@ $(document).ready(function () {
 
       var message = message_struct;
 
+      var timestamp = evt.timeStamp;
+
       message['command']  = "C"
       message['trigger_id'] = this.id
       message['celsius_flag'] = node_celsius
 
+      message['timestamp'] = timestamp
       
       node_ws.send(JSON.stringify(message));
     });

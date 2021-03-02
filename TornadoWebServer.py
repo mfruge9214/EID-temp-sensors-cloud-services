@@ -24,7 +24,6 @@ class SensorTableWebSocketHandler(WebSocketHandler):
 	def on_message(self, message):
 
 		received = json.loads(message)
-
 		print(received)
 		response = {}
 
@@ -32,6 +31,7 @@ class SensorTableWebSocketHandler(WebSocketHandler):
 		response['command'] = received['command']
 		response['trigger_id'] = received['trigger_id']
 		response['output_id'] = received['output_id']
+		response['timestamp'] = received['timestamp']
 
 		self.write_message(json.dumps(response))
 

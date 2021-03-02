@@ -90,10 +90,12 @@ class Monitor:
 
 	def get_last_sensor_data(self, sensor_number):
 
-		if(self.all_sensor_data): return self.all_sensor_data[sensor_number][-1]
+		try:
+			if(self.all_sensor_data): return self.all_sensor_data[sensor_number][-1]
 
-		else: return None
-		
+			else: return None
+		except:
+			return None
 
 	def get_specific_sensor_data_records(self, sensor_number, idx):
 

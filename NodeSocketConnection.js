@@ -20,63 +20,6 @@ node_log = function(data){
 };
 
 
-// node_handleICommand = function(data){
-
-//   var num_str = data['trigger_id'][-3];
-
-//   var trigger_id = data['trigger_id'];
-
-//   var output_id = data['output_id'];
-
-//   $("#" + output_id).html(data['output']);
-
-// };
-
-// node_handleSCommand = function(data){
-
-//   var num_str = data['trigger_id'][-3];
-
-//   var trigger_id = data['trigger_id'];
-
-//   var output_id = data['output_id'];
-
-//   $("#" + output_id).html(data['output']);
-  
-// };
-
-// node_handleCCommand = function(data, timestamp){
-
-//   var start_time = data['timestamp']
-
-//   log(timestamp)
-//   log("StartTime" + start_time)
-
-//   $(".elapsedTime").html()
-//   // Dictionary where keys = sensor numbers and values are arrays of up to 10 strings of formatted output
-//   var outputs = data['output'];
-
-//   var sensor_num;
-
-//   var table = $(".recentSensorData")
-
-//   for (sensor_num in outputs) {
-
-//     var outputText_list = outputs[sensor_num];
-
-//     // Identify the list element we need to append to
-
-//     var sensor_list_el = $(".recentSensorData").find("ol#sensor" + sensor_num.toString() + "_list_data");
-
-//     sensor_list_el.empty();
-
-//     for (entry in outputText_list) {
-
-//       sensor_list_el.append("<li>" + outputText_list[entry] + "</li>")
-
-//     }
-//   }
-// };
-
 
 $(document).ready(function () {
 
@@ -93,7 +36,7 @@ $(document).ready(function () {
       node_log("Message Received: " + evt.data);
       
       var dataBack = JSON.parse(evt.data);
-      var timestamp = evt.timeStamp
+      var resp_timestamp = Date.now()
 
       command = dataBack['command']
 
@@ -106,7 +49,7 @@ $(document).ready(function () {
       }
 
       if(command == "C"){
-        handleCCommand(dataBack, timestamp)
+        handleCCommand(dataBack, resp_timestamp)
       }
 
 
@@ -169,8 +112,9 @@ $(document).ready(function () {
 
       var message = message_struct;
 
-      var timestamp = evt.timeStamp;
+      // var timestamp = evt.timeStamp;
 
+      var timestamp = Date.now()
       message['command']  = "C"
       message['trigger_id'] = this.id
       message['celsius_flag'] = node_celsius

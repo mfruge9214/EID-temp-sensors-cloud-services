@@ -226,9 +226,9 @@ class AppWindow(QMainWindow):
 				temps[sensor_id].append(temp)
 				hums[sensor_id].append(humidity)
 
-		numEntries = len(temps[1])
+		# numEntries = len(temps[1])
 
-		timevals = np.arange(0, 10*numEntries, 10)
+		# timevals = np.arange(0, 10*numEntries, 10)
 
 		self.ui.plotWidget.canvas.fig.clear()
 		self.ui.plotWidget.canvas.ax = self.ui.plotWidget.canvas.fig.subplots(3, 2)
@@ -237,6 +237,9 @@ class AppWindow(QMainWindow):
 		for sensor_id in self.monitor.all_sensor_data.keys():
 			tempList = temps[sensor_id]
 			humList = hums[sensor_id]
+
+			numEntries = len(tempList)
+			timevals = np.arange(0, 10*numEntries, 10)
 			title = 'Sensor ' + str(sensor_id)
 			row = int((sensor_id-1) / 2)
 			col = (sensor_id-1) % 2

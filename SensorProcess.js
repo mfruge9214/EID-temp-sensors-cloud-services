@@ -20,12 +20,13 @@ console.log(' Sensor Number:', sensor.number);
 
 // Uses window.setInterval function, will repetadly execute this function every 10 seconds
 
-var count = 0;
-
+var count = -1;
 setInterval(function () {
 
-	if (count === 0){
+	if (count === -1){
 		clearTable();
+		count++;
+		return
 	}
 
 	// This code is executed in intervals set by the second argument in ms

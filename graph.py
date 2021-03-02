@@ -28,14 +28,14 @@ def generate_graph(data, units):
             temps[sensor_id].append(temp)
             hums[sensor_id].append(humidity)
 
-    numEntries = len(temps[1])
 
-    timevals = np.arange(0, 10*numEntries, 10)
 
     fig, ax = plt.subplots(3, 2)
     fig.subplots_adjust(hspace=0.88, wspace=0.75, top=0.92, bottom=0.12)
     # Plot all the sensor data!
     for sensor_id in data.keys():
+        numEntries = len(temps[1])
+        timevals = np.arange(0, 10*numEntries, 10)
         tempList = temps[sensor_id]
         humList = hums[sensor_id]
         title = 'Sensor ' + str(sensor_id)

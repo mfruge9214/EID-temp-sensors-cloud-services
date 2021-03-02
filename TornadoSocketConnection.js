@@ -111,7 +111,8 @@
 
       command = dataBack['command']
 
-      var resp_timestamp = evt.timeStamp;
+      // var resp_timestamp = evt.timeStamp;
+      var resp_timestamp = Date.now()
 
       if(command == "I"){
         handleICommand(dataBack)
@@ -153,7 +154,8 @@
 
     $("#C_allData_Tornado").click(function(evt){
 
-      var timestamp = evt.timeStamp;
+      // var timestamp = evt.timeStamp;
+      var timestamp = Date.now()
       var message = message_struct;
 
       log(evt)

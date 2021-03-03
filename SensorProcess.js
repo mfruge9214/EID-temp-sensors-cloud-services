@@ -6,12 +6,13 @@
 *					and writes result to the database
 */
 
+const { createNewEntry, clearTable, pool } = require('./Database.js');
 const { TempSensor, randomvalue, parseDateTime } = require('./TempSensor.js');
-const { createNewEntry, clearTable } = require('./Database.js');
 
 
 // Initialize sensor on first run through with passed in parameters
 
+var sensor_master = process.argv[3];
 var sensor = 'None';
 var sensor_number = Number(process.argv[2]);
 sensor = new TempSensor(sensor_number + 1);
@@ -20,7 +21,10 @@ console.log(' Sensor Number:', sensor.number);
 
 // Uses window.setInterval function, will repetadly execute this function every 10 seconds
 
+
+
 var count = -1;
+
 setInterval(function () {
 
 	if (count === -1){
@@ -29,8 +33,7 @@ setInterval(function () {
 		return
 	}
 
-	// This code is executed in intervals set by the second argument in ms
-	count++;
+
 
 	sensor.measureEnvironment();
 	console.log(sensor.number, ' taking measurment');
@@ -57,8 +60,11 @@ setInterval(function () {
 
 	// Exit condition
 	// Occurs at 31 executions of this periodic process
-	if(count === 31){			
+	if(count === 30){			
 		process.exit();
 	}
+
+	// This code is executed in intervals set by the second argument in ms
+	count++;
 
 }, 10000)

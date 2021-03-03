@@ -43,7 +43,7 @@ const poolConnect = pool.connect( err => {
 		console.log(' Connection to DB Successful ');
 
 		// Run TRUNCATE SQL command on TableName
-		//clearTable();
+		// clearTable();
 	}
 });
 
@@ -59,6 +59,8 @@ async function makeQuery(sql_cmd) {
         const request = pool.request(); // or: new sql.Request(pool1)
         const result = await request.query(sql_cmd);
         //console.dir(result);
+
+        console.log(result)
         return result;
 
     } catch (err) {
@@ -66,6 +68,26 @@ async function makeQuery(sql_cmd) {
         return null;
     }
 }
+
+
+
+// async function makeQuery(sql_cmd) {
+//     await poolConnect; // ensures that the pool has been created
+//     try {
+//         const request = pool.request(); // or: new sql.Request(pool1)
+
+//         request.input(sql_cmd, )
+
+
+//         const result = await request.query(sql_cmd);
+//         //console.dir(result);
+//         return result;
+
+//     } catch (err) {
+//         console.error('SQL error', err);
+//         return null;
+//     }
+// }
 
 
 
@@ -101,6 +123,7 @@ var createNewEntry = function (data) {
 		console.log(res);
 	}
 
+	return res
 }
 
 // function: clearTable
@@ -120,6 +143,8 @@ var clearTable = function(){
 	else{
 		console.log('Table Cleared');
 	}
+
+	return res
 }
 
 var getAllTableData = function(){
@@ -141,4 +166,6 @@ var getAllTableData = function(){
 
 module.exports = { 'createNewEntry' : createNewEntry,
 					'clearTable'	: clearTable,
-				   'getAllTableData'   : getAllTableData }
+				   'getAllTableData'   : getAllTableData,
+				   'pool' 			: pool,
+					'poolConnect'	: poolConnect}

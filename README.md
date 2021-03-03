@@ -3,12 +3,13 @@ Mike Fruge &amp; Bryan Cisneros, Emb. Interface Design Spring 21, Assignment 2
 
 ## Description
 
+This application features 2 different web servers responding to the same html client, both of which serve the same data through different means.
 
-This application features 2 different UI designs that the user may select upon application start.
+The tornado web server retrieves data from the python Monitor, and the node websocket server interfaces directly with the SQL database to retrieve it's data.
 
-Both Complex_UI_Routine and Simple_UI_Routine utilize the python Monitor API to retrieve data from a MSSQL database
+After running 'python master.py', the application will launch a node process which creates 6 temperature sensors and populate the database with the created data. This will also launch both web servers and a user interface to view the data.
 
-After running 'python master.py', the application will launch a node process which creates 6 temperature sensors and populate the database with the created data.
+Lastly, the user may open "Sensor_Table.html" to interact with the webservers and view the generated data.
 
 ## Execution Instructions
 
@@ -16,10 +17,12 @@ After running 'python master.py', the application will launch a node process whi
 - Python 3.x
 - pyodbc library (pip install pyodbc)
 - matplotlib library (pip install matplotlib)
+- tornado webserver library		(pip install tornado)
 
 **Node.js Requirments:**
 - Node.js v14.15.4
 - mssql node package (npm install mssql)
+- websocket			(npm install websocket)
 
 **SQL Configuration:**
 - Utilized MSSQL resources to create servers (localhost), databases, and tables for implementation
@@ -35,6 +38,7 @@ After running 'python master.py', the application will launch a node process whi
 
 **Program Execution:**
 - 'python master.py'
+- open 'Sensor_Table.html' from the project directory
 
 
 
@@ -45,5 +49,4 @@ After running 'python master.py', the application will launch a node process whi
 
 - We decided to implement alarm handling as a User side feature, rather than a sensor side feature. We did this to reduce the amount of moving parts in our application, as our table is still a 'one way path'
 
-- We had to be creative with our use of existing QObjects in both UI designs, and assume both managers will see the intent of each element
 

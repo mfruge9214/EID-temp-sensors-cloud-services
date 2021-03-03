@@ -129,5 +129,3 @@ dmypy.json
 .pyre/
 
 
-# Mike added this
-node_modules/

@@ -8,9 +8,14 @@ const { fork } = require('child_process');
 
 
 
+
+
 //Obtain User Input for number of sensors
 var userIn= process.argv.slice(2);
 var numSensors = Number(userIn);
+
+
+
 
 
 // Thread Forking and creation
@@ -21,6 +26,9 @@ for(var i = 1; i < numSensors + 1 ; i++){
 	sensor_proc_list[i] = new_proc;
 
 }
+
+
+
 
 
 

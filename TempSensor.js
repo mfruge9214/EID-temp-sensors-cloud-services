@@ -130,7 +130,7 @@ class TempSensor
 		// Check random range of numbers for spike
 		spikeChance = Math.random();
 		spike = 0;
-		if(spikeChance >.1 && spikeChance < .9){
+		if(spikeChance >.2 && spikeChance < .3){
 			// Generate spike
 			spike = genRandomFromRange(10, 0, false)
 

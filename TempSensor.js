@@ -91,6 +91,8 @@ class TempSensor
 		this.timestamp = getCurrentDateTime();
 		this.TalarmCnt = 0;
 		this.HalarmCnt = 0;
+		this.TAlarmState = false;
+		this.HAlarmState = false;
 		this.errorCnt = 0;
 		this.lastMeasurement =  {   'Temp': 0,
 									'Humidity': 0
@@ -128,7 +130,7 @@ class TempSensor
 		// Check random range of numbers for spike
 		spikeChance = Math.random();
 		spike = 0;
-		if(spikeChance >.1 && spikeChance < .2){
+		if(spikeChance >.1 && spikeChance < .9){
 			// Generate spike
 			spike = genRandomFromRange(10, 0, false)
 
@@ -151,14 +153,18 @@ class TempSensor
 		// Alarm incrementing check
 		////////////////////////////////////////////
 
-		var h_threshold = 5;
-		var t_threshold = 5;
+		var h_threshold = 4;
+		var t_threshold = 4;
+
+		this.HAlarmState = false;	
+		this.TAlarmState = false;	
 
 		if((thisH > this.targetH + h_threshold)){
 
 			// Check either value to ensure valid reading
 			if(thisH != 999){
 				this.HalarmCnt++;
+				this.HAlarmState = true;
 			}
 		}
 
@@ -167,6 +173,7 @@ class TempSensor
 			// Check either value to ensure valid reading
 			if(thisTemp != 999){
 				this.TalarmCnt++;
+				this.TAlarmState = true;
 			}
 		}
 

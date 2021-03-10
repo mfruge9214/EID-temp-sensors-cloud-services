@@ -6,9 +6,6 @@
 
 const { fork } = require('child_process');
 
-const { clearTable, poolConnect } = require('./Database.js')
-
-
 
 
 //Obtain User Input for number of sensors
@@ -18,15 +15,9 @@ var numSensors = Number(userIn);
 
 // Thread Forking and creation
 var sensor_proc_list = [];
-for(var i = 0; i<numSensors; i++){
+for(var i = 1; i < numSensors + 1 ; i++){
 
-	if(i === 0){
-		var new_proc = fork('SensorProcess.js', [String(i), true]);
-	}
-	else{
-		var new_proc = fork('SensorProcess.js', [String(i), false]);
-	}
-	
+	var new_proc = fork('SensorProcess_MQ.js', [String(i)]);
 	sensor_proc_list[i] = new_proc;
 
 }

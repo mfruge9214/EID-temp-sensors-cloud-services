@@ -1,0 +1,24 @@
+WORK BREAKDOWN STRUCTURE
+
+Mike Fruge & Bryan Cisneros
+----------------------------------
+1. PROJECT 5 CLOUD SERVICES
+	1.1 Research
+
+		1.1.1 RabbitMQ Hello World				Mike		M
+		1.1.2 IOT thing pub/sub example			Bryan		M
+
+	1.2 Implementation
+
+		1.2.1 Sensor / RabbitMQ Integration		Mike		S
+		1.2.2 RabbitMQ Receive / AWS thing 		Bryan		S
+		1.2.3 IOT Rules
+			1.2.3.1 Dynamo Rule 				Mike		S
+			1.2.3.2 SNS Rule 					Mike		S
+			1.2.3.3 SQS Rule 					Bryan		S
+
+		1.2.4 Lambda function
+			1.2.4.1 GetSensorData				Bryan		M
+
+		1.2.5 Restful API						Team		M
+		

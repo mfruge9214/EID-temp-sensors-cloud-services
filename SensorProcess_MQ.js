@@ -23,7 +23,10 @@ var count = 0;
 
 var serverConnectParams = {
   protocol: 'amqp',
-  hostname: 'localhost'
+  hostname: '73.229.199.207',
+  port:     '5672',
+  username: 'eid',
+  password: 'eid' 
 }
 
 
@@ -84,7 +87,7 @@ amqp.connect(serverConnectParams, function(error0, connection) {
 			}
 			count++;
 
-		}, 10000)
+		}, 4000)
 
 	});
 

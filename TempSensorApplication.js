@@ -7,9 +7,6 @@
 const { fork } = require('child_process');
 
 
-
-
-
 //Obtain User Input for number of sensors
 var userIn= process.argv.slice(2);
 var numSensors = Number(userIn);

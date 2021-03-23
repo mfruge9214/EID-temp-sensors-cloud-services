@@ -7,6 +7,7 @@ Mike Fruge & Bryan Cisneros
 
 		1.1.1 RabbitMQ Hello World				Mike		M
 		1.1.2 IOT thing pub/sub example			Bryan		M
+		1.1.3 WBS								Team		S
 
 	1.2 Implementation
 
@@ -21,4 +22,3 @@ Mike Fruge & Bryan Cisneros
 			1.2.4.1 GetSensorData				Bryan		M
 
 		1.2.5 Restful API						Team		M
-		

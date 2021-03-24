@@ -1,0 +1,23 @@
+{
+  "name": "eid-temp-sensors-cloud-services",
+  "version": "1.0.0",
+  "description": "Mike Fruge &amp; Bryan Cisneros, Emb. Interface Design Spring 21, Assignment 5",
+  "main": "AWS_GetRequest.js",
+  "dependencies": {
+    "amqplib": "^0.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfruge9214/EID-temp-sensors-cloud-services.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mfruge9214/EID-temp-sensors-cloud-services/issues"
+  },
+  "homepage": "https://github.com/mfruge9214/EID-temp-sensors-cloud-services#readme"
+}

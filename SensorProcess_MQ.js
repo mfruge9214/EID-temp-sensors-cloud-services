@@ -21,13 +21,20 @@ console.log(' Sensor Number:', sensor.number);
 
 var count = 0;
 
+// var serverConnectParams = {
+//   protocol: 'amqp',
+//   hostname: '73.229.199.207',
+//   port:     '5672',
+//   username: 'eid',
+//   password: 'eid' 
+// }
 var serverConnectParams = {
-  protocol: 'amqp',
-  hostname: '73.229.199.207',
-  port:     '5672',
-  username: 'eid',
-  password: 'eid' 
-}
+	protocol: 'amqp',
+	hostname: '10.0.0.154',
+	port:     '5672',
+	username: 'eid',
+	password: 'eid' 
+  }
 
 
 amqp.connect(serverConnectParams, function(error0, connection) {
